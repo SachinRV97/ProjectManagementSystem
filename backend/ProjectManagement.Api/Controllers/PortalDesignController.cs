@@ -31,10 +31,10 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
     public async Task<ActionResult<PortalDesignResponse>> UpsertPortalDesign(string customerCode, UpsertPortalDesignRequest request)
     {
         customerCode = customerCode.Trim().ToUpperInvariant();
-        var userRole = User.FindFirstValue(ClaimTypes.Role);
         var userCustomerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
+        var isOwnCustomerScope = User.HasClaim(CustomClaimTypes.PortalScope, PortalScopeValues.OwnCustomer);
 
-        if (userRole == RoleNames.CustomerEmployee && userCustomerCode != customerCode)
+        if (isOwnCustomerScope && userCustomerCode != customerCode)
         {
             return Forbid();
         }

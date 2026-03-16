@@ -2,4 +2,18 @@ namespace ProjectManagement.Api.Dtos;
 
 public record RegisterRequest(string Name, string Email, string Password, string Role, string? CustomerCode);
 public record LoginRequest(string Email, string Password);
-public record AuthResponse(string Token, string Name, string Email, string Role, string? CustomerCode);
+public record AuthResponse(
+    string Token,
+    string Name,
+    string Email,
+    string Role,
+    string? CustomerCode,
+    string[] Permissions,
+    bool LimitPortalManagementToOwnCustomer);
+
+public record RoleResponse(
+    Guid Id,
+    string Name,
+    string? Description,
+    string[] Permissions,
+    bool LimitPortalManagementToOwnCustomer);

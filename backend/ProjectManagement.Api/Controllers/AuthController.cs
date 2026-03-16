@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagement.Api.Dtos;
 using ProjectManagement.Api.Services;
@@ -8,6 +9,14 @@ namespace ProjectManagement.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService) : ControllerBase
 {
+    [AllowAnonymous]
+    [HttpGet("roles")]
+    public async Task<ActionResult<IReadOnlyList<RoleResponse>>> GetRoles()
+    {
+        return Ok(await authService.GetAvailableRolesAsync());
+    }
+
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<ActionResult<AuthResponse>> Register(RegisterRequest request)
     {
@@ -21,6 +30,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest request)
     {

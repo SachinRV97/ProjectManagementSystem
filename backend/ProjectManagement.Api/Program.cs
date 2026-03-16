@@ -33,13 +33,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("CanManagePortal", policy =>
-        policy.RequireRole(RoleNames.Admin, RoleNames.PortalAdmin, RoleNames.CustomerEmployee));
+        policy.RequireClaim(CustomClaimTypes.Permission, PermissionNames.ManagePortal));
 
     options.AddPolicy("CanManageEmployees", policy =>
-        policy.RequireRole(RoleNames.Admin, RoleNames.CustomerAdmin));
+        policy.RequireClaim(CustomClaimTypes.Permission, PermissionNames.ManageEmployees));
 
     options.AddPolicy("CanManageCustomers", policy =>
-        policy.RequireRole(RoleNames.Admin, RoleNames.PortalEmployee));
+        policy.RequireClaim(CustomClaimTypes.Permission, PermissionNames.ManageCustomers));
 });
 
 builder.Services.AddCors(options =>
@@ -69,6 +69,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+    DatabaseInitializer.EnsureRoleMasterTable(db);
     DbSeeder.Seed(db);
 }
 

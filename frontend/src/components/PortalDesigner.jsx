@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
+import { hasPermission, permissionNames } from '../services/access';
 
 export default function PortalDesigner({ session }) {
   const [design, setDesign] = useState(null);
@@ -9,7 +10,7 @@ export default function PortalDesigner({ session }) {
     api.get('/portaldesign/me').then(({ data }) => setDesign(data));
   }, []);
 
-  const canEdit = ['Admin', 'Portal-Admin', 'Customer-Employee'].includes(session.role);
+  const canEdit = hasPermission(session, permissionNames.managePortal);
 
   const save = async () => {
     setStatus('Saving...');
