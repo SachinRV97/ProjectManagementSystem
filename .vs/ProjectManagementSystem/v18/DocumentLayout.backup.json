@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Project\\Node JS\\PMS\\ProjectManagementSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{666A3146-AF7A-3381-C358-93D7AFC26596}|backend\\ProjectManagement.Api\\ProjectManagement.Api.csproj|d:\\project\\node js\\pms\\projectmanagementsystem\\backend\\projectmanagement.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{666A3146-AF7A-3381-C358-93D7AFC26596}|backend\\ProjectManagement.Api\\ProjectManagement.Api.csproj|solutionrelative:backend\\projectmanagement.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Project\\Node JS\\PMS\\ProjectManagementSystem\\backend\\ProjectManagement.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "backend\\ProjectManagement.Api\\appsettings.json",
+              "ToolTip": "D:\\Project\\Node JS\\PMS\\ProjectManagementSystem\\backend\\ProjectManagement.Api\\appsettings.json",
+              "RelativeToolTip": "backend\\ProjectManagement.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-16T09:47:04.971Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
