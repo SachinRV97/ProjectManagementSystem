@@ -143,6 +143,19 @@ body {
   position: sticky;
   top: 1rem;
   z-index: 10;
+  transition: transform 0.28s ease, opacity 0.28s ease, box-shadow 0.28s ease;
+  will-change: transform, opacity;
+}
+
+.admin-nav-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.admin-nav-hidden {
+  opacity: 0;
+  transform: translateY(calc(-100% - 1rem));
+  pointer-events: none;
 }
 
 .admin-menu {

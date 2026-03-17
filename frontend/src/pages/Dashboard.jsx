@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CompanyManagementPanel from '../components/CompanyManagementPanel';
 import PortalDesigner from '../components/PortalDesigner';
 import RoleMatrix from '../components/RoleMatrix';
@@ -8,6 +8,7 @@ import { canManageCompanyUsers, hasPermission, isGlobalAdmin, permissionNames } 
 
 export default function Dashboard({ session, logout }) {
   const globalAdmin = isGlobalAdmin(session);
+  const bannerRef = useRef(null);
   const sections = [
     {
       id: 'overview',
@@ -48,12 +49,46 @@ export default function Dashboard({ session, logout }) {
   ].filter((section) => section.visible);
 
   const [activeSection, setActiveSection] = useState(sections[0]?.id ?? 'overview');
+  const [isMenuVisible, setIsMenuVisible] = useState(true);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     if (!sections.some((section) => section.id === activeSection)) {
       setActiveSection(sections[0]?.id ?? 'overview');
     }
   }, [activeSection, sections]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY || 0;
+      const previousScrollY = lastScrollYRef.current;
+      const scrollDelta = currentScrollY - previousScrollY;
+      const bannerBottom = bannerRef.current?.getBoundingClientRect().bottom ?? 0;
+
+      if (bannerBottom > 24) {
+        setIsMenuVisible(true);
+        lastScrollYRef.current = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY <= 24) {
+        setIsMenuVisible(true);
+      } else if (scrollDelta > 8) {
+        setIsMenuVisible(false);
+      } else if (scrollDelta < -8) {
+        setIsMenuVisible(true);
+      }
+
+      lastScrollYRef.current = currentScrollY;
+    };
+
+    lastScrollYRef.current = window.scrollY || 0;
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const currentSection = sections.find((section) => section.id === activeSection) ?? sections[0];
 
@@ -189,7 +224,7 @@ export default function Dashboard({ session, logout }) {
 
   return (
     <div className="container py-4 py-lg-5">
-      <section className="dashboard-banner mb-4">
+      <section ref={bannerRef} className="dashboard-banner mb-4">
         <div className="row g-4 align-items-center">
           <div className="col-lg-8">
             <span className="hero-kicker">Company control center</span>
@@ -210,7 +245,7 @@ export default function Dashboard({ session, logout }) {
         </div>
       </section>
 
-      <nav className="card border-0 shadow-sm dashboard-card admin-nav mb-4">
+      <nav className={`card border-0 shadow-sm dashboard-card admin-nav mb-4 ${isMenuVisible ? 'admin-nav-visible' : 'admin-nav-hidden'}`}>
         <div className="card-body p-3">
           <div className="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
             <div className="nav nav-pills admin-menu">
