@@ -230,13 +230,22 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             ?? await db.PortalDesigns
                 .AsNoTracking()
                 .FirstOrDefaultAsync(design =>
-                    design.CompanyCode == CompanyCodes.Global &&
-                    design.CustomerCode == CompanyCodes.Global);
+                design.CompanyCode == CompanyCodes.Global &&
+                design.CustomerCode == CompanyCodes.Global);
+
+        var siteName = template?.SiteName ?? $"{displayName} Portal";
+        var siteSlug = await GenerateUniqueSiteSlugAsync(
+            template?.SiteSlug,
+            siteName,
+            normalizedCompanyCode,
+            normalizedCustomerCode);
 
         db.PortalDesigns.Add(new PortalDesign
         {
             CompanyCode = normalizedCompanyCode,
             CustomerCode = normalizedCustomerCode,
+            SiteName = siteName,
+            SiteSlug = siteSlug,
             HeaderTitle = template?.HeaderTitle ?? $"{displayName} Portal",
             FooterText = template?.FooterText ?? $"Copyright {DateTime.UtcNow.Year} {displayName}",
             PrimaryColor = template?.PrimaryColor ?? "#1d4ed8",
@@ -255,6 +264,60 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 
     private static string? NormalizeOptional(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+
+    private async Task<string> GenerateUniqueSiteSlugAsync(
+        string? requestedSlug,
+        string fallbackName,
+        string companyCode,
+        string customerCode)
+    {
+        var baseSlug = NormalizeSiteSlug(requestedSlug, fallbackName, companyCode, customerCode);
+        var candidate = baseSlug;
+        var suffix = 2;
+
+        while (await db.PortalDesigns.AnyAsync(design => design.SiteSlug == candidate))
+        {
+            candidate = $"{baseSlug}-{suffix++}";
+        }
+
+        return candidate;
+    }
+
+    private static string NormalizeSiteSlug(string? requestedSlug, string fallbackName, string companyCode, string customerCode)
+    {
+        var normalized = Slugify(string.IsNullOrWhiteSpace(requestedSlug) ? fallbackName : requestedSlug);
+        if (!string.IsNullOrWhiteSpace(normalized))
+        {
+            return normalized;
+        }
+
+        var fallbackSlug = Slugify($"{companyCode}-{customerCode}");
+        return string.IsNullOrWhiteSpace(fallbackSlug)
+            ? Guid.NewGuid().ToString("N")
+            : fallbackSlug;
+    }
+
+    private static string Slugify(string value)
+    {
+        var builder = new StringBuilder();
+        var lastWasDash = false;
+
+        foreach (var character in value.Trim().ToLowerInvariant())
+        {
+            if (char.IsLetterOrDigit(character))
+            {
+                builder.Append(character);
+                lastWasDash = false;
+            }
+            else if (!lastWasDash)
+            {
+                builder.Append('-');
+                lastWasDash = true;
+            }
+        }
+
+        return builder.ToString().Trim('-');
+    }
 
     private static string ResolveCustomerCode(string roleName, string? requestedCustomerCode)
     {

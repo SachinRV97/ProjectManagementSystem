@@ -3,6 +3,8 @@ namespace ProjectManagement.Api.Dtos;
 public record PortalDesignResponse(
     Guid Id,
     string CustomerCode,
+    string SiteName,
+    string SiteSlug,
     string HeaderTitle,
     string FooterText,
     string PrimaryColor,
@@ -13,6 +15,7 @@ public record PortalDesignResponse(
     DateTime UpdatedAtUtc);
 
 public record UpsertPortalDesignRequest(
+    string SiteName,
     string HeaderTitle,
     string FooterText,
     string PrimaryColor,

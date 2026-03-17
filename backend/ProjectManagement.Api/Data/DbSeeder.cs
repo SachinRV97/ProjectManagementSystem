@@ -64,6 +64,8 @@ public static class DbSeeder
             {
                 CompanyCode = CompanyCodes.Global,
                 CustomerCode = CompanyCodes.Global,
+                SiteName = "Unified Project Management Portal",
+                SiteSlug = "unified-project-management-portal",
                 HeaderTitle = "Unified Project Management Portal",
                 FooterText = "© 2026 Unified Portal",
                 PrimaryColor = "#1d4ed8",

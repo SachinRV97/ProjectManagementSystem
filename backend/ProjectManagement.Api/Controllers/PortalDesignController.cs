@@ -46,6 +46,24 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
         return Ok(ToResponse(design));
     }
 
+    [AllowAnonymous]
+    [HttpGet("site/{siteName}")]
+    public async Task<ActionResult<PortalDesignResponse>> GetPublicPortalDesign(string siteName)
+    {
+        var normalizedSiteSlug = NormalizeRouteSlug(siteName, "portal");
+        var designs = await db.PortalDesigns
+            .AsNoTracking()
+            .ToListAsync();
+
+        var design = designs.FirstOrDefault(item => MatchesSite(item, normalizedSiteSlug));
+        if (design is null)
+        {
+            return NotFound(new { message = "Portal site was not found." });
+        }
+
+        return Ok(ToResponse(design));
+    }
+
     [HttpPut("{customerCode}")]
     [Authorize(Policy = "CanManagePortal")]
     public async Task<ActionResult<PortalDesignResponse>> UpsertPortalDesign(string customerCode, UpsertPortalDesignRequest request)
@@ -68,11 +86,14 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
             design = new PortalDesign
             {
                 CompanyCode = companyCode,
-                CustomerCode = customerCode
+                CustomerCode = customerCode,
+                SiteName = NormalizeOrFallback(request.SiteName, request.HeaderTitle)
             };
             db.PortalDesigns.Add(design);
         }
 
+        design.SiteName = NormalizeOrFallback(request.SiteName, request.HeaderTitle);
+        design.SiteSlug = await GenerateUniqueSiteSlugAsync(design.SiteName, design.Id);
         design.HeaderTitle = request.HeaderTitle;
         design.FooterText = request.FooterText;
         design.PrimaryColor = request.PrimaryColor;
@@ -95,6 +116,8 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
         new(
             design.Id,
             design.CustomerCode,
+            ResolveSiteName(design),
+            ResolveSiteSlug(design),
             design.HeaderTitle,
             design.FooterText,
             design.PrimaryColor,
@@ -126,6 +149,22 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 
     private static string SerializePages(IReadOnlyList<PortalPageResponse> pages) =>
         JsonSerializer.Serialize(pages, PageJsonOptions);
+
+    private async Task<string> GenerateUniqueSiteSlugAsync(string siteName, Guid designId)
+    {
+        var baseSlug = NormalizeRouteSlug(siteName, $"site-{designId:N}");
+        var candidate = baseSlug;
+        var suffix = 2;
+
+        while (await db.PortalDesigns.AnyAsync(item =>
+            item.Id != designId &&
+            item.SiteSlug == candidate))
+        {
+            candidate = $"{baseSlug}-{suffix++}";
+        }
+
+        return candidate;
+    }
 
     private static IReadOnlyList<PortalPageResponse> NormalizePages(
         IReadOnlyList<PortalPageRequest>? pages,
@@ -204,6 +243,30 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
             : "aurora";
     }
 
+    private static bool MatchesSite(PortalDesign design, string normalizedSiteSlug)
+    {
+        var currentSiteSlug = ResolveSiteSlug(design);
+        if (string.Equals(currentSiteSlug, normalizedSiteSlug, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        var currentSiteNameSlug = NormalizeRouteSlug(ResolveSiteName(design), ResolveSiteName(design));
+        if (string.Equals(currentSiteNameSlug, normalizedSiteSlug, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        var headerSlug = NormalizeRouteSlug(design.HeaderTitle, design.HeaderTitle);
+        return string.Equals(headerSlug, normalizedSiteSlug, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string ResolveSiteName(PortalDesign design) =>
+        NormalizeOrFallback(design.SiteName, design.HeaderTitle);
+
+    private static string ResolveSiteSlug(PortalDesign design) =>
+        NormalizeRouteSlug(design.SiteSlug, ResolveSiteName(design));
+
     private static string NormalizeSlug(string? requestedSlug, string fallbackName, int pageNumber)
     {
         var source = NormalizeOrFallback(requestedSlug, fallbackName);
@@ -227,6 +290,32 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
         var normalized = Regex.Replace(builder.ToString().Trim('-'), "-{2,}", "-");
         return string.IsNullOrWhiteSpace(normalized)
             ? $"page-{pageNumber}"
+            : normalized;
+    }
+
+    private static string NormalizeRouteSlug(string? requestedValue, string fallbackValue)
+    {
+        var source = NormalizeOrFallback(requestedValue, fallbackValue);
+        var builder = new StringBuilder();
+        var lastWasDash = false;
+
+        foreach (var character in source.ToLowerInvariant())
+        {
+            if (char.IsLetterOrDigit(character))
+            {
+                builder.Append(character);
+                lastWasDash = false;
+            }
+            else if (!lastWasDash)
+            {
+                builder.Append('-');
+                lastWasDash = true;
+            }
+        }
+
+        var normalized = Regex.Replace(builder.ToString().Trim('-'), "-{2,}", "-");
+        return string.IsNullOrWhiteSpace(normalized)
+            ? "portal"
             : normalized;
     }
 

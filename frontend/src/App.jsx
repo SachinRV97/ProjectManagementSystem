@@ -1,9 +1,15 @@
 import { useAuth } from './context/AuthContext';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
+import PortalSitePreviewPage from './pages/PortalSitePreviewPage';
 
 export default function App() {
   const { session, logout } = useAuth();
+  const isPortalPreviewRoute = typeof window !== 'undefined' && window.location.pathname !== '/';
+
+  if (isPortalPreviewRoute) {
+    return <PortalSitePreviewPage />;
+  }
 
   if (!session) {
     return (

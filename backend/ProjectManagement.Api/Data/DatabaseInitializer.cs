@@ -217,6 +217,16 @@ public static class DatabaseInitializer
                 ALTER TABLE [PortalDesigns] ADD [CompanyCode] nvarchar(50) NULL;
             END;
 
+            IF COL_LENGTH('PortalDesigns', 'SiteName') IS NULL
+            BEGIN
+                ALTER TABLE [PortalDesigns] ADD [SiteName] nvarchar(150) NOT NULL CONSTRAINT [DF_PortalDesigns_SiteName] DEFAULT (N'Unified Project Management Portal') WITH VALUES;
+            END;
+
+            IF COL_LENGTH('PortalDesigns', 'SiteSlug') IS NULL
+            BEGIN
+                ALTER TABLE [PortalDesigns] ADD [SiteSlug] nvarchar(180) NOT NULL CONSTRAINT [DF_PortalDesigns_SiteSlug] DEFAULT (N'unified-project-management-portal') WITH VALUES;
+            END;
+
             IF COL_LENGTH('PortalDesigns', 'PageConfigurationsJson') IS NULL
             BEGIN
                 ALTER TABLE [PortalDesigns] ADD [PageConfigurationsJson] nvarchar(max) NULL;
@@ -254,6 +264,17 @@ public static class DatabaseInitializer
             )
             BEGIN
                 DROP INDEX [IX_PortalDesigns_CustomerCode] ON [PortalDesigns];
+            END;
+
+            IF NOT EXISTS
+            (
+                SELECT 1
+                FROM sys.indexes
+                WHERE name = N'IX_PortalDesigns_SiteSlug'
+                    AND object_id = OBJECT_ID(N'[PortalDesigns]')
+            )
+            BEGIN
+                CREATE INDEX [IX_PortalDesigns_SiteSlug] ON [PortalDesigns] ([SiteSlug]);
             END;
 
             IF NOT EXISTS

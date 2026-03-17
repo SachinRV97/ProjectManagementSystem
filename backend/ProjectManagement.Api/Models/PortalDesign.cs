@@ -5,6 +5,8 @@ public class PortalDesign
     public Guid Id { get; set; } = Guid.NewGuid();
     public string CompanyCode { get; set; } = "GLOBAL";
     public string CustomerCode { get; set; } = "GLOBAL";
+    public string SiteName { get; set; } = "Unified Project Management Portal";
+    public string SiteSlug { get; set; } = "unified-project-management-portal";
     public string HeaderTitle { get; set; } = "Project Management Portal";
     public string FooterText { get; set; } = "© 2026 Project Management";
     public string PrimaryColor { get; set; } = "#1d4ed8";

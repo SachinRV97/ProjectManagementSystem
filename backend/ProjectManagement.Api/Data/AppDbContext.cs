@@ -69,6 +69,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .IsUnique();
 
         modelBuilder.Entity<PortalDesign>()
+            .Property(design => design.SiteName)
+            .HasMaxLength(150);
+
+        modelBuilder.Entity<PortalDesign>()
+            .Property(design => design.SiteSlug)
+            .HasMaxLength(180);
+
+        modelBuilder.Entity<PortalDesign>()
             .Property(design => design.CompanyCode)
             .HasMaxLength(50);
 

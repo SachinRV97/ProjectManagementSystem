@@ -1,58 +1,12 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 import { hasPermission, permissionNames } from '../services/access';
-
-const themePresets = {
-  aurora: {
-    label: 'Aurora',
-    heroBackground: 'linear-gradient(135deg, rgba(13, 110, 253, 0.92), rgba(11, 114, 133, 0.88))',
-    surfaceBackground: 'linear-gradient(180deg, #ffffff, #eef6ff)',
-  },
-  ocean: {
-    label: 'Ocean',
-    heroBackground: 'linear-gradient(135deg, rgba(3, 105, 161, 0.94), rgba(8, 145, 178, 0.86))',
-    surfaceBackground: 'linear-gradient(180deg, #f4fbff, #e0f2fe)',
-  },
-  sunrise: {
-    label: 'Sunrise',
-    heroBackground: 'linear-gradient(135deg, rgba(234, 88, 12, 0.9), rgba(251, 146, 60, 0.86))',
-    surfaceBackground: 'linear-gradient(180deg, #fff8f1, #ffedd5)',
-  },
-  midnight: {
-    label: 'Midnight',
-    heroBackground: 'linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.9))',
-    surfaceBackground: 'linear-gradient(180deg, #e2e8f0, #cbd5e1)',
-  },
-};
-
-const createPageId = () => (
-  typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
-    ? crypto.randomUUID()
-    : `page-${Date.now()}`
-);
-
-const slugify = (value, fallback) => {
-  const normalized = (value || fallback)
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-  return normalized || fallback;
-};
-
-const buildNewPage = (index) => ({
-  id: createPageId(),
-  name: `Page ${index}`,
-  slug: `page-${index}`,
-  heroTitle: `Page ${index} Hero`,
-  heroText: 'Describe the page purpose, audience, and top message for this screen.',
-  sectionTitle: 'Highlights',
-  sectionText: 'Use this section to introduce content blocks, services, or portal actions.',
-  bulletPoints: ['Flexible layout', 'Editable highlights', 'Reusable CTA'],
-  ctaLabel: 'Contact Team',
-  ctaLink: '#',
-  themePreset: 'aurora',
-});
+import {
+  buildNewPage,
+  buildPortalSiteUrl,
+  slugifySiteValue,
+  themePresets,
+} from '../services/portalSite';
 
 export default function PortalDesigner({ session }) {
   const [design, setDesign] = useState(null);
@@ -71,6 +25,8 @@ export default function PortalDesigner({ session }) {
 
         setDesign({
           ...data,
+          siteName: data.siteName || data.headerTitle,
+          siteSlug: data.siteSlug || slugifySiteValue(data.siteName || data.headerTitle),
           pages: Array.isArray(data.pages) && data.pages.length > 0
             ? data.pages
             : [buildNewPage(1)],
@@ -92,6 +48,7 @@ export default function PortalDesigner({ session }) {
   const pages = design?.pages ?? [];
   const selectedPage = pages.find((page) => page.id === selectedPageId) ?? pages[0] ?? null;
   const activeTheme = themePresets[selectedPage?.themePreset] ?? themePresets.aurora;
+  const previewUrl = buildPortalSiteUrl(design?.siteName, design?.siteSlug, selectedPage?.slug);
 
   useEffect(() => {
     if (selectedPage?.id && selectedPage.id !== selectedPageId) {
@@ -164,10 +121,11 @@ export default function PortalDesigner({ session }) {
         accentColor: design.accentColor,
         showAnnouncements: design.showAnnouncements,
         announcementText: design.announcementText,
+        siteName: design.siteName,
         pages: design.pages.map((page, index) => ({
           ...page,
           name: page.name.trim() || `Page ${index + 1}`,
-          slug: slugify(page.slug, `page-${index + 1}`),
+          slug: slugifySiteValue(page.slug, `page-${index + 1}`),
           heroTitle: page.heroTitle.trim() || page.name.trim() || `Page ${index + 1}`,
           heroText: page.heroText,
           sectionTitle: page.sectionTitle,
@@ -182,6 +140,8 @@ export default function PortalDesigner({ session }) {
       const { data } = await api.put(`/portaldesign/${design.customerCode}`, payload);
       setDesign({
         ...data,
+        siteName: data.siteName || data.headerTitle,
+        siteSlug: data.siteSlug || slugifySiteValue(data.siteName || data.headerTitle),
         pages: data.pages?.length ? data.pages : [buildNewPage(1)],
       });
       setSelectedPageId((current) => current || data.pages?.[0]?.id || 'home');
@@ -228,6 +188,32 @@ export default function PortalDesigner({ session }) {
                 </div>
 
                 <div className="row g-3">
+                  <div className="col-12">
+                    <label className="form-label">Site Name</label>
+                    <input
+                      className="form-control"
+                      value={design.siteName || ''}
+                      onChange={(event) => updateDesign({
+                        siteName: event.target.value,
+                        siteSlug: slugifySiteValue(event.target.value, 'portal'),
+                      })}
+                      disabled={!canEdit}
+                    />
+                    <div className="form-text">This creates the public portal URL for preview and redirect.</div>
+                  </div>
+                  <div className="col-12">
+                    <label className="form-label">Site Preview URL</label>
+                    <input className="form-control" value={previewUrl} readOnly />
+                    <div className="form-text">Save the design after changing the site name so the public route stays in sync.</div>
+                  </div>
+                  <div className="col-12 d-flex flex-wrap gap-2">
+                    <a className="btn btn-outline-dark btn-sm" href={buildPortalSiteUrl(design.siteName, design.siteSlug)} target="_blank" rel="noreferrer">
+                      Open Site Home
+                    </a>
+                    <a className="btn btn-outline-primary btn-sm" href={previewUrl} target="_blank" rel="noreferrer">
+                      Open Selected Page
+                    </a>
+                  </div>
                   <div className="col-12">
                     <label className="form-label">Header Title</label>
                     <input className="form-control" value={design.headerTitle} onChange={(event) => updateDesign({ headerTitle: event.target.value })} disabled={!canEdit} />
@@ -298,7 +284,7 @@ export default function PortalDesigner({ session }) {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Page Slug</label>
-                    <input className="form-control" value={selectedPage.slug} onChange={(event) => updateSelectedPage({ slug: slugify(event.target.value, 'page') })} disabled={!canEdit} />
+                    <input className="form-control" value={selectedPage.slug} onChange={(event) => updateSelectedPage({ slug: slugifySiteValue(event.target.value, 'page') })} disabled={!canEdit} />
                   </div>
                   <div className="col-12">
                     <label className="form-label">Hero Title</label>
