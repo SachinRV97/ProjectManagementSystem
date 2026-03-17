@@ -16,6 +16,16 @@ public static class DbSeeder
 
     public static void Seed(AppDbContext db)
     {
+        if (!db.Companies.Any(company => company.Code == CompanyCodes.Global))
+        {
+            db.Companies.Add(new Company
+            {
+                Name = "Global System",
+                Code = CompanyCodes.Global,
+                ContactEmail = "admin@system.local"
+            });
+        }
+
         foreach (var defaultRole in DefaultRoles)
         {
             if (db.Roles.Any(role => role.Name == defaultRole.Name))
@@ -43,7 +53,8 @@ public static class DbSeeder
                 Email = "admin@system.local",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
                 Role = RoleNames.Admin,
-                CustomerCode = "GLOBAL"
+                CompanyCode = CompanyCodes.Global,
+                CustomerCode = CompanyCodes.Global
             });
         }
 
@@ -51,7 +62,8 @@ public static class DbSeeder
         {
             db.PortalDesigns.Add(new PortalDesign
             {
-                CustomerCode = "GLOBAL",
+                CompanyCode = CompanyCodes.Global,
+                CustomerCode = CompanyCodes.Global,
                 HeaderTitle = "Unified Project Management Portal",
                 FooterText = "© 2026 Unified Portal",
                 PrimaryColor = "#1d4ed8",

@@ -34,18 +34,26 @@ export default function RoleMatrix() {
   }, []);
 
   return (
-    <section className="panel">
-      <h3>Role Access Matrix</h3>
-      {error && <p className="error">{error}</p>}
-      {loading && !error && <p>Loading roles...</p>}
-      {!loading && roles.length === 0 && !error && <p>No active roles are configured.</p>}
-      <ul>
-        {roles.map((role) => (
-          <li key={role.id}>
-            <strong>{role.name}</strong>: {describeRole(role)}
-          </li>
-        ))}
-      </ul>
+    <section className="card border-0 shadow-sm h-100 dashboard-card">
+      <div className="card-body p-4">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h3 className="h4 mb-0">Role Access Matrix</h3>
+          <span className="badge text-bg-primary-subtle text-primary-emphasis">{roles.length} roles</span>
+        </div>
+        {error && <div className="alert alert-danger py-2">{error}</div>}
+        {loading && !error && <div className="alert alert-secondary py-2">Loading roles...</div>}
+        {!loading && roles.length === 0 && !error && <div className="alert alert-warning py-2 mb-0">No active roles are configured.</div>}
+        {roles.length > 0 && (
+          <div className="list-group list-group-flush">
+            {roles.map((role) => (
+              <div key={role.id} className="list-group-item px-0 bg-transparent border-secondary-subtle">
+                <div className="fw-semibold">{role.name}</div>
+                <div className="text-secondary small mt-1">{describeRole(role)}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

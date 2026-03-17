@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminManagementService, AdminManagementService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -28,10 +31,48 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = jwt.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key))
         };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = async context =>
+            {
+                var userIdValue = context.Principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? context.Principal?.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+                if (!Guid.TryParse(userIdValue, out var userId))
+                {
+                    context.Fail("User token is invalid.");
+                    return;
+                }
+
+                var db = context.HttpContext.RequestServices.GetRequiredService<AppDbContext>();
+                var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(item => item.Id == userId);
+
+                if (user is null || !user.IsLoginAllowed)
+                {
+                    context.Fail("User login is blocked.");
+                    return;
+                }
+
+                var company = await db.Companies.AsNoTracking().FirstOrDefaultAsync(item => item.Code == user.CompanyCode);
+                if (company is null || !company.IsLoginAllowed)
+                {
+                    context.Fail("Company login is blocked.");
+                }
+            }
+        };
     });
 
 builder.Services.AddAuthorization(options =>
 {
+    options.AddPolicy("GlobalAdminOnly", policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(RoleNames.Admin) &&
+            string.Equals(
+                context.User.FindFirst(CustomClaimTypes.CompanyCode)?.Value,
+                CompanyCodes.Global,
+                StringComparison.OrdinalIgnoreCase)));
+
     options.AddPolicy("CanManagePortal", policy =>
         policy.RequireClaim(CustomClaimTypes.Permission, PermissionNames.ManagePortal));
 
@@ -69,7 +110,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
-    DatabaseInitializer.EnsureRoleMasterTable(db);
+    DatabaseInitializer.EnsureDatabaseObjects(db);
     DbSeeder.Seed(db);
 }
 

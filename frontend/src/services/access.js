@@ -30,6 +30,23 @@ export const getRoles = async () => {
   return data;
 };
 
+export const getAssignableRoles = async () => {
+  const { data } = await api.get('/auth/assignable-roles');
+  return data;
+};
+
+export const isCustomerRoleName = (roleName) =>
+  ['Customer-Admin', 'Customer-Employee', 'Customer-User'].includes(roleName);
+
+export const canManageCompanyUsers = (session) =>
+  ['Admin', 'Portal-Admin', 'Portal-Employee'].includes(session?.role);
+
+export const isGlobalAdmin = (session) =>
+  Boolean(session?.isGlobalAdmin || (
+    session?.role === 'Admin' &&
+    session?.companyCode === 'GLOBAL'
+  ));
+
 export const hasPermission = (session, permission) => {
   const sessionPermissions = Array.isArray(session?.permissions) ? session.permissions : null;
 
