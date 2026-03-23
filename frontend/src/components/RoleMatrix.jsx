@@ -1,5 +1,7 @@
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import { useEffect, useState } from 'react';
 import { describeRole, getRoles } from '../services/access';
 
@@ -59,6 +61,10 @@ export default function RoleMatrix() {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 const rights = {
   Admin: ['All access'],
   'Portal-Admin': ['Manage portal for employees and customers'],
@@ -80,6 +86,12 @@ export default function RoleMatrix() {
         ))}
       </ul>
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs

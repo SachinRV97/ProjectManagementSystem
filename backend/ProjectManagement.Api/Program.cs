@@ -1,7 +1,13 @@
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -23,7 +29,13 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<IAuthService, AuthService>();
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 builder.Services.AddScoped<IAdminManagementService, AdminManagementService>();
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -43,6 +55,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = jwt.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key))
         };
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 
@@ -79,10 +93,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     });
 
 builder.Services.AddAuthorization(options =>
 {
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
     options.AddPolicy("GlobalAdminOnly", policy =>
@@ -104,6 +124,10 @@ builder.Services.AddAuthorization(options =>
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     options.AddPolicy("CanManagePortal", policy =>
         policy.RequireRole(RoleNames.Admin, RoleNames.PortalAdmin, RoleNames.CustomerEmployee));
 
@@ -113,6 +137,12 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("CanManageCustomers", policy =>
         policy.RequireRole(RoleNames.Admin, RoleNames.PortalEmployee));
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -147,7 +177,13 @@ using (var scope = app.Services.CreateScope())
     db.Database.EnsureCreated();
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     DatabaseInitializer.EnsureDatabaseObjects(db);
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======

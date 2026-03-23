@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import api from '../services/api';
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import { hasPermission, permissionNames } from '../services/access';
 import {
   buildNewPage,
@@ -414,6 +416,10 @@ export default function PortalDesigner({ session }) {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 
 export default function PortalDesigner({ session }) {
   const [design, setDesign] = useState(null);
@@ -478,6 +484,12 @@ export default function PortalDesigner({ session }) {
         </main>
         <footer style={{ background: design.accentColor }}>{design.footerText}</footer>
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs

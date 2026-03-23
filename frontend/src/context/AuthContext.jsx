@@ -1,6 +1,14 @@
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+=======
+import { createContext, useContext, useMemo, useState } from 'react';
+>>>>>>> theirs
+=======
+import { createContext, useContext, useMemo, useState } from 'react';
+>>>>>>> theirs
 =======
 import { createContext, useContext, useMemo, useState } from 'react';
 >>>>>>> theirs
@@ -17,6 +25,8 @@ export const AuthProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : null;
   });
 
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
   useEffect(() => {
@@ -54,6 +64,10 @@ export const AuthProvider = ({ children }) => {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
   if (session?.token) {
     attachToken(session.token);
   }
@@ -81,6 +95,12 @@ export const AuthProvider = ({ children }) => {
   const value = useMemo(
     () => ({ session, login, register, logout }),
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs

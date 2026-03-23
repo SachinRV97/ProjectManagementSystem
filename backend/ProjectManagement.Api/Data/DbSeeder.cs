@@ -6,6 +6,8 @@ public static class DbSeeder
 {
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     private static readonly (string Name, string Description, bool CanManagePortal, bool CanManageEmployees, bool CanManageCustomers, bool LimitPortalManagementToOwnCustomer, int DisplayOrder)[] DefaultRoles =
     [
         (RoleNames.Admin, "All access", true, true, true, false, 1),
@@ -55,6 +57,14 @@ public static class DbSeeder
     public static void Seed(AppDbContext db)
     {
 >>>>>>> theirs
+=======
+    public static void Seed(AppDbContext db)
+    {
+>>>>>>> theirs
+=======
+    public static void Seed(AppDbContext db)
+    {
+>>>>>>> theirs
         if (!db.Users.Any())
         {
             db.Users.Add(new ApplicationUser
@@ -65,8 +75,16 @@ public static class DbSeeder
                 Role = RoleNames.Admin,
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
                 CompanyCode = CompanyCodes.Global,
                 CustomerCode = CompanyCodes.Global
+=======
+                CustomerCode = "GLOBAL"
+>>>>>>> theirs
+=======
+                CustomerCode = "GLOBAL"
+>>>>>>> theirs
 =======
                 CustomerCode = "GLOBAL"
 >>>>>>> theirs
@@ -82,10 +100,18 @@ public static class DbSeeder
             {
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
                 CompanyCode = CompanyCodes.Global,
                 CustomerCode = CompanyCodes.Global,
                 SiteName = "Unified Project Management Portal",
                 SiteSlug = "unified-project-management-portal",
+=======
+                CustomerCode = "GLOBAL",
+>>>>>>> theirs
+=======
+                CustomerCode = "GLOBAL",
+>>>>>>> theirs
 =======
                 CustomerCode = "GLOBAL",
 >>>>>>> theirs

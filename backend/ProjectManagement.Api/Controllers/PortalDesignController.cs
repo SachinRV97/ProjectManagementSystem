@@ -1,8 +1,14 @@
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -22,6 +28,8 @@ namespace ProjectManagement.Api.Controllers;
 [Authorize]
 public class PortalDesignController(AppDbContext db) : ControllerBase
 {
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
     private static readonly JsonSerializerOptions PageJsonOptions = new(JsonSerializerDefaults.Web);
@@ -47,10 +55,22 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
     public async Task<ActionResult<PortalDesignResponse>> GetMyPortalDesign()
     {
 >>>>>>> theirs
+=======
+    [HttpGet("me")]
+    public async Task<ActionResult<PortalDesignResponse>> GetMyPortalDesign()
+    {
+>>>>>>> theirs
+=======
+    [HttpGet("me")]
+    public async Task<ActionResult<PortalDesignResponse>> GetMyPortalDesign()
+    {
+>>>>>>> theirs
         var customerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
 
         var design = await db.PortalDesigns
             .AsNoTracking()
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
             .FirstOrDefaultAsync(item =>
@@ -88,6 +108,14 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
             .FirstOrDefaultAsync(item => item.CustomerCode == customerCode)
             ?? await db.PortalDesigns.AsNoTracking().FirstAsync(item => item.CustomerCode == "GLOBAL");
 >>>>>>> theirs
+=======
+            .FirstOrDefaultAsync(item => item.CustomerCode == customerCode)
+            ?? await db.PortalDesigns.AsNoTracking().FirstAsync(item => item.CustomerCode == "GLOBAL");
+>>>>>>> theirs
+=======
+            .FirstOrDefaultAsync(item => item.CustomerCode == customerCode)
+            ?? await db.PortalDesigns.AsNoTracking().FirstAsync(item => item.CustomerCode == "GLOBAL");
+>>>>>>> theirs
 
         return Ok(ToResponse(design));
     }
@@ -96,6 +124,8 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
     [Authorize(Policy = "CanManagePortal")]
     public async Task<ActionResult<PortalDesignResponse>> UpsertPortalDesign(string customerCode, UpsertPortalDesignRequest request)
     {
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
         var companyCode = User.FindFirstValue(CustomClaimTypes.CompanyCode) ?? "GLOBAL";
@@ -107,12 +137,22 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         customerCode = customerCode.Trim().ToUpperInvariant();
         var userRole = User.FindFirstValue(ClaimTypes.Role);
         var userCustomerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
 
         if (userRole == RoleNames.CustomerEmployee && userCustomerCode != customerCode)
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -120,6 +160,8 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
             return Forbid();
         }
 
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
         var design = await db.PortalDesigns.FirstOrDefaultAsync(item =>
@@ -141,6 +183,10 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         var design = await db.PortalDesigns.FirstOrDefaultAsync(item => item.CustomerCode == customerCode);
         if (design is null)
         {
@@ -149,6 +195,12 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
         }
 
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -160,11 +212,17 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
         design.AnnouncementText = request.AnnouncementText;
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
         design.PageConfigurationsJson = SerializePages(
             NormalizePages(
                 request.Pages,
                 request.HeaderTitle,
                 request.AnnouncementText));
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -182,8 +240,14 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
             design.CustomerCode,
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
             ResolveSiteName(design),
             ResolveSiteSlug(design),
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -194,6 +258,8 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
             design.AccentColor,
             design.ShowAnnouncements,
             design.AnnouncementText,
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
             ReadPages(design.PageConfigurationsJson, design.HeaderTitle, design.AnnouncementText),
@@ -405,6 +471,12 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 
     private static string NormalizeOrFallback(string? value, string fallback) =>
         string.IsNullOrWhiteSpace(value) ? fallback : value.Trim();
+=======
+            design.UpdatedAtUtc);
+>>>>>>> theirs
+=======
+            design.UpdatedAtUtc);
+>>>>>>> theirs
 =======
             design.UpdatedAtUtc);
 >>>>>>> theirs

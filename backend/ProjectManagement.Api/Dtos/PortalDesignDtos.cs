@@ -5,8 +5,14 @@ public record PortalDesignResponse(
     string CustomerCode,
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     string SiteName,
     string SiteSlug,
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -17,6 +23,8 @@ public record PortalDesignResponse(
     string AccentColor,
     bool ShowAnnouncements,
     string? AnnouncementText,
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
     IReadOnlyList<PortalPageResponse> Pages,
@@ -34,11 +42,23 @@ public record UpsertPortalDesignRequest(
 
 public record UpsertPortalDesignRequest(
 >>>>>>> theirs
+=======
+    DateTime UpdatedAtUtc);
+
+public record UpsertPortalDesignRequest(
+>>>>>>> theirs
+=======
+    DateTime UpdatedAtUtc);
+
+public record UpsertPortalDesignRequest(
+>>>>>>> theirs
     string HeaderTitle,
     string FooterText,
     string PrimaryColor,
     string AccentColor,
     bool ShowAnnouncements,
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
     string? AnnouncementText,
@@ -69,6 +89,12 @@ public record PortalPageRequest(
     string? CtaLabel,
     string? CtaLink,
     string? ThemePreset);
+=======
+    string? AnnouncementText);
+>>>>>>> theirs
+=======
+    string? AnnouncementText);
+>>>>>>> theirs
 =======
     string? AnnouncementText);
 >>>>>>> theirs

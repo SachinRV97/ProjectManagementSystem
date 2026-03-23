@@ -1,5 +1,7 @@
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import { useEffect, useRef, useState } from 'react';
 import CompanyManagementPanel from '../components/CompanyManagementPanel';
 import PortalDesigner from '../components/PortalDesigner';
@@ -281,6 +283,10 @@ export default function Dashboard({ session, logout }) {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 import PortalDesigner from '../components/PortalDesigner';
 import RoleMatrix from '../components/RoleMatrix';
 
@@ -297,6 +303,12 @@ export default function Dashboard({ session, logout }) {
       <RoleMatrix />
       <PortalDesigner session={session} />
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs

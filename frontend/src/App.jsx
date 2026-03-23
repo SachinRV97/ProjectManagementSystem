@@ -3,6 +3,8 @@ import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import PortalSitePreviewPage from './pages/PortalSitePreviewPage';
 
 export default function App() {
@@ -61,6 +63,10 @@ export default function App() {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 
 export default function App() {
   const { session, logout } = useAuth();
@@ -72,6 +78,12 @@ export default function App() {
         <p>Centralized portal setup with role-based access control.</p>
         <AuthPage />
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -81,11 +93,19 @@ export default function App() {
 
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
   return (
     <div className="app-shell">
       <Dashboard session={session} logout={logout} />
     </div>
   );
+=======
+  return <Dashboard session={session} logout={logout} />;
+>>>>>>> theirs
+=======
+  return <Dashboard session={session} logout={logout} />;
+>>>>>>> theirs
 =======
   return <Dashboard session={session} logout={logout} />;
 >>>>>>> theirs

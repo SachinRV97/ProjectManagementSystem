@@ -5,10 +5,18 @@ public class PortalDesign
     public Guid Id { get; set; } = Guid.NewGuid();
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     public string CompanyCode { get; set; } = "GLOBAL";
     public string CustomerCode { get; set; } = "GLOBAL";
     public string SiteName { get; set; } = "Unified Project Management Portal";
     public string SiteSlug { get; set; } = "unified-project-management-portal";
+=======
+    public string CustomerCode { get; set; } = "GLOBAL";
+>>>>>>> theirs
+=======
+    public string CustomerCode { get; set; } = "GLOBAL";
+>>>>>>> theirs
 =======
     public string CustomerCode { get; set; } = "GLOBAL";
 >>>>>>> theirs
@@ -23,7 +31,13 @@ public class PortalDesign
     public string? AnnouncementText { get; set; } = "Welcome to your workspace";
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     public string? PageConfigurationsJson { get; set; }
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======

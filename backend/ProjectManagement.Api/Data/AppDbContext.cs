@@ -7,8 +7,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<AppRole> Roles => Set<AppRole>();
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -18,6 +24,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
         modelBuilder.Entity<Company>(company =>
@@ -76,11 +84,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         modelBuilder.Entity<ApplicationUser>()
             .HasIndex(user => user.Email)
             .IsUnique();
 
         modelBuilder.Entity<PortalDesign>()
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
             .Property(design => design.SiteName)
@@ -100,6 +114,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<PortalDesign>()
             .HasIndex(design => new { design.CompanyCode, design.CustomerCode })
+=======
+            .HasIndex(design => design.CustomerCode)
+>>>>>>> theirs
+=======
+            .HasIndex(design => design.CustomerCode)
+>>>>>>> theirs
 =======
             .HasIndex(design => design.CustomerCode)
 >>>>>>> theirs

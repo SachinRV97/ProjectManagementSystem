@@ -1,6 +1,8 @@
 :root {
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
   --app-ink: #14213d;
   --app-muted: #5b6475;
   --app-line: rgba(20, 33, 61, 0.08);
@@ -12,10 +14,18 @@
 =======
   font-family: Inter, system-ui, Arial, sans-serif;
 >>>>>>> theirs
+=======
+  font-family: Inter, system-ui, Arial, sans-serif;
+>>>>>>> theirs
+=======
+  font-family: Inter, system-ui, Arial, sans-serif;
+>>>>>>> theirs
 }
 
 body {
   margin: 0;
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
   min-height: 100vh;
@@ -348,6 +358,10 @@ body {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
   background: #f1f5f9;
   color: #0f172a;
 }
@@ -411,6 +425,12 @@ button {
   border-radius: 10px;
   overflow: hidden;
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -418,6 +438,8 @@ button {
 
 .preview header,
 .preview footer {
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
   padding: 0.9rem 1rem;
@@ -704,6 +726,10 @@ button {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
   color: white;
   padding: 10px;
   font-weight: 600;
@@ -722,6 +748,12 @@ button {
 .error {
   color: #dc2626;
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs

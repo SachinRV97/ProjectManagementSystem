@@ -6,10 +6,18 @@ public interface IAuthService
 {
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     Task<IReadOnlyList<RoleResponse>> GetAvailableRolesAsync();
     Task<IReadOnlyList<RoleResponse>> GetAssignableRolesAsync(Guid creatorUserId);
     Task<AuthResponse> RegisterCompanyAsync(RegisterCompanyRequest request);
     Task<RegisteredUserResponse> RegisterUserAsync(Guid creatorUserId, RegisterUserRequest request);
+=======
+    Task<AuthResponse> RegisterAsync(RegisterRequest request);
+>>>>>>> theirs
+=======
+    Task<AuthResponse> RegisterAsync(RegisterRequest request);
+>>>>>>> theirs
 =======
     Task<AuthResponse> RegisterAsync(RegisterRequest request);
 >>>>>>> theirs

@@ -3,6 +3,8 @@ import { useAuth } from '../context/AuthContext';
 
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 export default function AuthPage() {
   const { login, registerCompany } = useAuth();
   const [isCompanyRegistration, setIsCompanyRegistration] = useState(false);
@@ -29,6 +31,10 @@ export default function AuthPage() {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 const roles = [
   'Admin',
   'Portal-Admin',
@@ -49,6 +55,12 @@ export default function AuthPage() {
     role: 'Customer-User',
     customerCode: 'GLOBAL',
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -57,6 +69,8 @@ export default function AuthPage() {
   const submit = async (event) => {
     event.preventDefault();
     setError('');
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 
@@ -71,6 +85,10 @@ export default function AuthPage() {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     try {
       if (isRegister) {
         await register(form);
@@ -80,6 +98,12 @@ export default function AuthPage() {
     } catch (e) {
       setError(e?.response?.data?.message ?? 'Unexpected error');
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -87,6 +111,8 @@ export default function AuthPage() {
   };
 
   return (
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
     <section className="card border-0 auth-card shadow-lg">
@@ -293,6 +319,10 @@ export default function AuthPage() {
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     <section className="panel auth-card">
       <h2>{isRegister ? 'Register account' : 'Login'}</h2>
       <form onSubmit={submit}>
@@ -335,6 +365,12 @@ export default function AuthPage() {
         {isRegister ? 'Already have account? Login' : 'Need account? Register'}
       </button>
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs

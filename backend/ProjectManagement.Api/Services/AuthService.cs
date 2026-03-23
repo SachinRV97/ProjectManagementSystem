@@ -16,6 +16,8 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     public async Task<IReadOnlyList<RoleResponse>> GetAvailableRolesAsync()
     {
         var roles = await db.Roles
@@ -122,10 +124,22 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
     {
         if (!RoleNames.All.Contains(request.Role))
 >>>>>>> theirs
+=======
+    public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+    {
+        if (!RoleNames.All.Contains(request.Role))
+>>>>>>> theirs
+=======
+    public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+    {
+        if (!RoleNames.All.Contains(request.Role))
+>>>>>>> theirs
         {
             throw new InvalidOperationException("Invalid role selected.");
         }
 
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
         if (!RoleFlowRules.CanAssignRole(creator.Role, targetRole.Name))
@@ -140,6 +154,12 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 =======
         var email = request.Email.Trim().ToLowerInvariant();
 >>>>>>> theirs
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
         if (await db.Users.AnyAsync(user => user.Email == email))
         {
             throw new InvalidOperationException("Email already exists.");
@@ -147,7 +167,13 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
         var customerCode = ResolveCustomerCode(targetRole.Name, request.CustomerCode);
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -157,6 +183,8 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             Name = request.Name.Trim(),
             Email = email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
             Role = targetRole.Name,
@@ -183,6 +211,10 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
             Role = request.Role,
             CustomerCode = string.IsNullOrWhiteSpace(request.CustomerCode) ? "GLOBAL" : request.CustomerCode.Trim().ToUpperInvariant()
         };
@@ -192,6 +224,12 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 
         return BuildAuthResponse(user);
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -201,7 +239,15 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
     {
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
         var email = NormalizeEmail(request.Email);
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
 =======
         var email = request.Email.Trim().ToLowerInvariant();
 >>>>>>> theirs
@@ -216,6 +262,8 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             throw new InvalidOperationException("Invalid email or password.");
         }
 
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
         if (!user.IsLoginAllowed)
@@ -412,6 +460,10 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 =======
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         return BuildAuthResponse(user);
     }
 
@@ -427,6 +479,12 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
         };
 
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -439,6 +497,8 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             expires: DateTime.UtcNow.AddHours(8),
             signingCredentials: credentials);
 
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
         return new AuthResponse(
@@ -462,6 +522,14 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             role.Description,
             role.GetPermissions(),
             role.LimitPortalManagementToOwnCustomer);
+=======
+        return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
+    }
+>>>>>>> theirs
+=======
+        return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
+    }
+>>>>>>> theirs
 =======
         return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
     }
