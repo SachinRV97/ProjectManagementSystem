@@ -18,6 +18,9 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     public async Task<IReadOnlyList<RoleResponse>> GetAvailableRolesAsync()
     {
         var roles = await db.Roles
@@ -161,10 +164,65 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
         var email = request.Email.Trim().ToLowerInvariant();
 >>>>>>> theirs
         if (await db.Users.AnyAsync(user => user.Email == email))
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+    public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+    {
+        var user = await CreateUserAsync(request.Name, request.Email, request.Password, request.Role, request.CustomerCode, null);
+        return BuildAuthResponse(user);
+    }
+
+    public async Task<AuthResponse> LoginAsync(LoginRequest request)
+    {
+        var email = NormalizeEmail(request.Email);
+        var user = await db.Users.FirstOrDefaultAsync(item => item.Email == email && item.IsActive)
+            ?? throw new InvalidOperationException("Invalid email or password.");
+
+        if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+        {
+            throw new InvalidOperationException("Invalid email or password.");
+        }
+
+        return BuildAuthResponse(user);
+    }
+
+    public Task<ApplicationUser> CreateManagedUserAsync(CreateManagedUserRequest request, ApplicationUser actor)
+    {
+        ValidateRoleAssignment(actor, request.Role, request.CustomerCode);
+        return CreateUserAsync(request.Name, request.Email, request.Password, request.Role, request.CustomerCode, actor);
+    }
+
+    private async Task<ApplicationUser> CreateUserAsync(string name, string email, string password, string role, string? customerCode, ApplicationUser? actor)
+    {
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(password))
+        {
+            throw new InvalidOperationException("Name and password are required.");
+        }
+
+        if (!RoleNames.All.Contains(role))
+        {
+            throw new InvalidOperationException("Invalid role selected.");
+        }
+
+        var normalizedEmail = NormalizeEmail(email);
+        if (await db.Users.AnyAsync(user => user.Email == normalizedEmail))
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         {
             throw new InvalidOperationException("Email already exists.");
         }
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -217,10 +275,38 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 >>>>>>> theirs
             Role = request.Role,
             CustomerCode = string.IsNullOrWhiteSpace(request.CustomerCode) ? "GLOBAL" : request.CustomerCode.Trim().ToUpperInvariant()
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+        var normalizedCustomerCode = NormalizeCustomerCode(customerCode);
+        if (actor is not null)
+        {
+            ValidateRoleAssignment(actor, role, normalizedCustomerCode);
+        }
+
+        var user = new ApplicationUser
+        {
+            Name = name.Trim(),
+            Email = normalizedEmail,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+            Role = role,
+            CustomerCode = normalizedCustomerCode
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         };
 
         db.Users.Add(user);
         await db.SaveChangesAsync();
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 
         return BuildAuthResponse(user);
 <<<<<<< ours
@@ -319,10 +405,36 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
         if (await db.PortalDesigns.AnyAsync(design =>
             design.CompanyCode == normalizedCompanyCode &&
             design.CustomerCode == normalizedCustomerCode))
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+        return user;
+    }
+
+    private static string NormalizeEmail(string email) => email.Trim().ToLowerInvariant();
+
+    private static string NormalizeCustomerCode(string? customerCode) =>
+        string.IsNullOrWhiteSpace(customerCode) ? "GLOBAL" : customerCode.Trim().ToUpperInvariant();
+
+    private static void ValidateRoleAssignment(ApplicationUser actor, string targetRole, string customerCode)
+    {
+        if (actor.Role == RoleNames.Admin)
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         {
             return;
         }
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
         var template = await db.PortalDesigns
             .AsNoTracking()
             .FirstOrDefaultAsync(design =>
@@ -465,6 +577,34 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 =======
 >>>>>>> theirs
         return BuildAuthResponse(user);
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+        if (actor.Role == RoleNames.CustomerAdmin)
+        {
+            if (actor.CustomerCode != customerCode)
+            {
+                throw new InvalidOperationException("Customer admins can only manage users inside their own customer scope.");
+            }
+
+            if (targetRole is not (RoleNames.CustomerAdmin or RoleNames.CustomerEmployee or RoleNames.CustomerUser))
+            {
+                throw new InvalidOperationException("Customer admins can only create customer roles.");
+            }
+
+            return;
+        }
+
+        throw new InvalidOperationException("You do not have permission to create users.");
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     }
 
     private AuthResponse BuildAuthResponse(ApplicationUser user)
@@ -472,6 +612,9 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
             new(JwtRegisteredClaimNames.Email, user.Email),
             new(ClaimTypes.Name, user.Name),
             new(ClaimTypes.Role, user.Role),
@@ -488,6 +631,26 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(ClaimTypes.Email, user.Email),
+            new(ClaimTypes.Name, user.Name),
+            new(ClaimTypes.Role, user.Role),
+            new("customer_code", user.CustomerCode)
+        };
+
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
@@ -497,6 +660,9 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             expires: DateTime.UtcNow.AddHours(8),
             signingCredentials: credentials);
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -522,6 +688,18 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             role.Description,
             role.GetPermissions(),
             role.LimitPortalManagementToOwnCustomer);
+=======
+        return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
+    }
+>>>>>>> theirs
+=======
+        return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
+    }
+>>>>>>> theirs
+=======
+        return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
+    }
+>>>>>>> theirs
 =======
         return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
     }

@@ -1,10 +1,28 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagement.Api", "backend\ProjectManagement.Api\ProjectManagement.Api.csproj", "{666A3146-AF7A-3381-C358-93D7AFC26596}"
+=======
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagement.Api", "backend\\ProjectManagement.Api\\ProjectManagement.Api.csproj", "{9E07C93D-B8F5-43B3-934A-2DB180EFBC95}"
+>>>>>>> theirs
+=======
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagement.Api", "backend\\ProjectManagement.Api\\ProjectManagement.Api.csproj", "{9E07C93D-B8F5-43B3-934A-2DB180EFBC95}"
+>>>>>>> theirs
+=======
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagement.Api", "backend\\ProjectManagement.Api\\ProjectManagement.Api.csproj", "{9E07C93D-B8F5-43B3-934A-2DB180EFBC95}"
+>>>>>>> theirs
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,18 +30,46 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 		{666A3146-AF7A-3381-C358-93D7AFC26596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{666A3146-AF7A-3381-C358-93D7AFC26596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{666A3146-AF7A-3381-C358-93D7AFC26596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{666A3146-AF7A-3381-C358-93D7AFC26596}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+		{9E07C93D-B8F5-43B3-934A-2DB180EFBC95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E07C93D-B8F5-43B3-934A-2DB180EFBC95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E07C93D-B8F5-43B3-934A-2DB180EFBC95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E07C93D-B8F5-43B3-934A-2DB180EFBC95}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 	GlobalSection(NestedProjects) = preSolution
 		{666A3146-AF7A-3381-C358-93D7AFC26596} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {67F1B821-3C7E-4754-A568-1E49C502BBE2}
 	EndGlobalSection
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 EndGlobal

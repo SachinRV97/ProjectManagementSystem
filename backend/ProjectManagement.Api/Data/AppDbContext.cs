@@ -9,6 +9,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<AppRole> Roles => Set<AppRole>();
 =======
@@ -88,10 +91,32 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+    public DbSet<ApplicationUser> Users => Set<ApplicationUser>();
+    public DbSet<PortalDesign> PortalDesigns => Set<PortalDesign>();
+    public DbSet<PortalNavigationItem> PortalNavigationItems => Set<PortalNavigationItem>();
+    public DbSet<PortalContentSection> PortalContentSections => Set<PortalContentSection>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         modelBuilder.Entity<ApplicationUser>()
             .HasIndex(user => user.Email)
             .IsUnique();
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
         modelBuilder.Entity<PortalDesign>()
 <<<<<<< ours
 <<<<<<< ours
@@ -127,5 +152,36 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasIndex(design => design.CustomerCode)
 >>>>>>> theirs
             .IsUnique();
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+        modelBuilder.Entity<ApplicationUser>()
+            .Property(user => user.CustomerCode)
+            .HasMaxLength(50);
+
+        modelBuilder.Entity<PortalDesign>()
+            .HasIndex(design => design.CustomerCode)
+            .IsUnique();
+
+        modelBuilder.Entity<PortalDesign>()
+            .HasMany(design => design.NavigationItems)
+            .WithOne(item => item.PortalDesign)
+            .HasForeignKey(item => item.PortalDesignId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PortalDesign>()
+            .HasMany(design => design.ContentSections)
+            .WithOne(section => section.PortalDesign)
+            .HasForeignKey(section => section.PortalDesignId)
+            .OnDelete(DeleteBehavior.Cascade);
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     }
 }

@@ -1,5 +1,8 @@
 namespace ProjectManagement.Api.Dtos;
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 public record PortalDesignResponse(
     Guid Id,
     string CustomerCode,
@@ -100,4 +103,52 @@ public record PortalPageRequest(
 >>>>>>> theirs
 =======
     string? AnnouncementText);
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+public record PortalNavigationItemDto(Guid? Id, string Label, string Href, int SortOrder, bool OpenInNewTab);
+
+public record PortalContentSectionDto(Guid? Id, string SectionKey, string Title, string Body, int SortOrder);
+
+public record PortalDesignResponse(
+    Guid Id,
+    string CustomerCode,
+    string PortalName,
+    string HeaderTitle,
+    string FooterText,
+    string PrimaryColor,
+    string SecondaryColor,
+    string HeroTitle,
+    string HeroSubtitle,
+    string AnnouncementText,
+    string SupportEmail,
+    string LogoUrl,
+    bool ShowAnnouncements,
+    DateTime UpdatedAtUtc,
+    IReadOnlyCollection<PortalNavigationItemDto> NavigationItems,
+    IReadOnlyCollection<PortalContentSectionDto> ContentSections);
+
+public record UpsertPortalDesignRequest(
+    string PortalName,
+    string HeaderTitle,
+    string FooterText,
+    string PrimaryColor,
+    string SecondaryColor,
+    string HeroTitle,
+    string HeroSubtitle,
+    string AnnouncementText,
+    string SupportEmail,
+    string LogoUrl,
+    bool ShowAnnouncements,
+    IReadOnlyCollection<PortalNavigationItemDto> NavigationItems,
+    IReadOnlyCollection<PortalContentSectionDto> ContentSections);
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs

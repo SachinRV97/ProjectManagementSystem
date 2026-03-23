@@ -1,3 +1,6 @@
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 <<<<<<< ours
@@ -78,10 +81,79 @@ export default function PortalDesigner({ session }) {
         page.id === selectedPage.id
           ? { ...page, ...patch }
           : page
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+import { useEffect, useMemo, useState } from 'react';
+import api from '../services/api';
+
+const emptyNavigation = { label: '', href: '', sortOrder: 1, openInNewTab: false };
+const emptySection = { sectionKey: '', title: '', body: '', sortOrder: 1 };
+
+export default function PortalDesigner({ session }) {
+  const [design, setDesign] = useState(null);
+  const [selectedCustomerCode, setSelectedCustomerCode] = useState(session.customerCode || 'GLOBAL');
+  const [status, setStatus] = useState('');
+  const [error, setError] = useState('');
+
+  const canSwitchCustomer = useMemo(
+    () => ['Admin', 'Portal-Admin'].includes(session.role),
+    [session.role],
+  );
+
+  const canEdit = useMemo(
+    () => ['Admin', 'Portal-Admin', 'Customer-Employee'].includes(session.role),
+    [session.role],
+  );
+
+  const loadDesign = async (customerCode) => {
+    setError('');
+    const endpoint = canSwitchCustomer ? `/portaldesign/${customerCode}` : '/portaldesign/me';
+    const { data } = await api.get(endpoint);
+    setDesign(data);
+    setSelectedCustomerCode(data.customerCode);
+  };
+
+  useEffect(() => {
+    loadDesign(selectedCustomerCode).catch((requestError) => {
+      setError(requestError?.response?.data?.message ?? 'Unable to load portal design.');
+    });
+  }, [selectedCustomerCode]);
+
+  const updateField = (field, value) => {
+    setDesign((current) => ({ ...current, [field]: value }));
+  };
+
+  const updateNavigationItem = (index, field, value) => {
+    setDesign((current) => ({
+      ...current,
+      navigationItems: current.navigationItems.map((item, itemIndex) => (
+        itemIndex === index ? { ...item, [field]: value } : item
       )),
     }));
   };
 
+  const updateSection = (index, field, value) => {
+    setDesign((current) => ({
+      ...current,
+      contentSections: current.contentSections.map((item, itemIndex) => (
+        itemIndex === index ? { ...item, [field]: value } : item
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+      )),
+    }));
+  };
+
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
   const addPage = () => {
     setDesign((current) => {
       const newPage = buildNewPage((current.pages?.length ?? 0) + 1);
@@ -488,6 +560,258 @@ export default function PortalDesigner({ session }) {
 <<<<<<< ours
 >>>>>>> theirs
 =======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+  const addNavigationItem = () => {
+    setDesign((current) => ({
+      ...current,
+      navigationItems: [
+        ...current.navigationItems,
+        { ...emptyNavigation, sortOrder: current.navigationItems.length + 1 },
+      ],
+    }));
+  };
+
+  const addSection = () => {
+    setDesign((current) => ({
+      ...current,
+      contentSections: [
+        ...current.contentSections,
+        { ...emptySection, sortOrder: current.contentSections.length + 1 },
+      ],
+    }));
+  };
+
+  const removeNavigationItem = (index) => {
+    setDesign((current) => ({
+      ...current,
+      navigationItems: current.navigationItems.filter((_, itemIndex) => itemIndex !== index),
+    }));
+  };
+
+  const removeSection = (index) => {
+    setDesign((current) => ({
+      ...current,
+      contentSections: current.contentSections.filter((_, itemIndex) => itemIndex !== index),
+    }));
+  };
+
+  const save = async () => {
+    if (!canEdit || !design) {
+      return;
+    }
+
+    setStatus('Saving changes...');
+    setError('');
+
+    try {
+      const { data } = await api.put(`/portaldesign/${design.customerCode}`, design);
+      setDesign(data);
+      setStatus('Portal settings saved successfully.');
+    } catch (requestError) {
+      setStatus('');
+      setError(requestError?.response?.data?.message ?? 'Unable to save portal settings.');
+    }
+  };
+
+  if (!design) {
+    return (
+      <section className="panel">
+        <p>Loading portal designer...</p>
+        {error && <p className="error">{error}</p>}
+      </section>
+    );
+  }
+
+  return (
+    <section className="panel">
+      <div className="section-header">
+        <div>
+          <p className="eyebrow">Portal builder</p>
+          <h2>Header, footer, menu, and homepage sections</h2>
+        </div>
+        <div className="toolbar compact">
+          {canSwitchCustomer && (
+            <input
+              value={selectedCustomerCode}
+              onChange={(event) => setSelectedCustomerCode(event.target.value.toUpperCase())}
+              placeholder="Customer Code"
+            />
+          )}
+          <span className="badge">{design.customerCode}</span>
+        </div>
+      </div>
+
+      <div className="designer-layout">
+        <div className="designer-form">
+          <div className="grid two-col">
+            <label>
+              Portal name
+              <input value={design.portalName} onChange={(event) => updateField('portalName', event.target.value)} disabled={!canEdit} />
+            </label>
+            <label>
+              Header title
+              <input value={design.headerTitle} onChange={(event) => updateField('headerTitle', event.target.value)} disabled={!canEdit} />
+            </label>
+            <label>
+              Footer text
+              <input value={design.footerText} onChange={(event) => updateField('footerText', event.target.value)} disabled={!canEdit} />
+            </label>
+            <label>
+              Support email
+              <input value={design.supportEmail} onChange={(event) => updateField('supportEmail', event.target.value)} disabled={!canEdit} />
+            </label>
+            <label>
+              Primary color
+              <input value={design.primaryColor} onChange={(event) => updateField('primaryColor', event.target.value)} disabled={!canEdit} />
+            </label>
+            <label>
+              Secondary color
+              <input value={design.secondaryColor} onChange={(event) => updateField('secondaryColor', event.target.value)} disabled={!canEdit} />
+            </label>
+            <label>
+              Hero title
+              <input value={design.heroTitle} onChange={(event) => updateField('heroTitle', event.target.value)} disabled={!canEdit} />
+            </label>
+            <label>
+              Hero subtitle
+              <textarea value={design.heroSubtitle} onChange={(event) => updateField('heroSubtitle', event.target.value)} disabled={!canEdit} rows="3" />
+            </label>
+            <label>
+              Announcement text
+              <textarea value={design.announcementText} onChange={(event) => updateField('announcementText', event.target.value)} disabled={!canEdit} rows="3" />
+            </label>
+            <label>
+              Logo URL
+              <input value={design.logoUrl} onChange={(event) => updateField('logoUrl', event.target.value)} disabled={!canEdit} />
+            </label>
+          </div>
+
+          <label className="toggle-row">
+            <input
+              type="checkbox"
+              checked={design.showAnnouncements}
+              onChange={(event) => updateField('showAnnouncements', event.target.checked)}
+              disabled={!canEdit}
+            />
+            <span>Show announcement bar</span>
+          </label>
+
+          <div className="nested-panel">
+            <div className="section-header compact">
+              <h3>Navigation links</h3>
+              {canEdit && <button onClick={addNavigationItem}>Add menu item</button>}
+            </div>
+
+            {design.navigationItems.map((item, index) => (
+              <div key={`${item.label}-${index}`} className="grid nav-row">
+                <input value={item.label} onChange={(event) => updateNavigationItem(index, 'label', event.target.value)} placeholder="Label" disabled={!canEdit} />
+                <input value={item.href} onChange={(event) => updateNavigationItem(index, 'href', event.target.value)} placeholder="Link" disabled={!canEdit} />
+                <input
+                  type="number"
+                  value={item.sortOrder}
+                  onChange={(event) => updateNavigationItem(index, 'sortOrder', Number(event.target.value))}
+                  placeholder="Sort"
+                  disabled={!canEdit}
+                />
+                <label className="toggle-row inline">
+                  <input
+                    type="checkbox"
+                    checked={item.openInNewTab}
+                    onChange={(event) => updateNavigationItem(index, 'openInNewTab', event.target.checked)}
+                    disabled={!canEdit}
+                  />
+                  <span>New tab</span>
+                </label>
+                {canEdit && <button className="danger" onClick={() => removeNavigationItem(index)}>Remove</button>}
+              </div>
+            ))}
+          </div>
+
+          <div className="nested-panel">
+            <div className="section-header compact">
+              <h3>Homepage sections</h3>
+              {canEdit && <button onClick={addSection}>Add content section</button>}
+            </div>
+
+            {design.contentSections.map((section, index) => (
+              <div key={`${section.sectionKey}-${index}`} className="section-card-editor">
+                <div className="grid two-col">
+                  <input value={section.sectionKey} onChange={(event) => updateSection(index, 'sectionKey', event.target.value)} placeholder="Section key" disabled={!canEdit} />
+                  <input
+                    type="number"
+                    value={section.sortOrder}
+                    onChange={(event) => updateSection(index, 'sortOrder', Number(event.target.value))}
+                    placeholder="Sort order"
+                    disabled={!canEdit}
+                  />
+                </div>
+                <input value={section.title} onChange={(event) => updateSection(index, 'title', event.target.value)} placeholder="Section title" disabled={!canEdit} />
+                <textarea value={section.body} onChange={(event) => updateSection(index, 'body', event.target.value)} placeholder="Section body" disabled={!canEdit} rows="3" />
+                {canEdit && <button className="danger" onClick={() => removeSection(index)}>Remove section</button>}
+              </div>
+            ))}
+          </div>
+
+          {canEdit ? (
+            <div className="toolbar">
+              <button onClick={save}>Save portal settings</button>
+              {status && <span className="success-text">{status}</span>}
+            </div>
+          ) : (
+            <p className="muted-text">Your role can view the portal configuration but cannot modify it.</p>
+          )}
+
+          {error && <p className="error">{error}</p>}
+        </div>
+
+        <div className="preview-shell">
+          <div className="portal-preview" style={{ '--primary': design.primaryColor, '--secondary': design.secondaryColor }}>
+            <div className="preview-topbar">
+              <img src={design.logoUrl} alt={design.portalName} />
+              <nav>
+                {design.navigationItems
+                  .slice()
+                  .sort((left, right) => left.sortOrder - right.sortOrder)
+                  .map((item) => (
+                    <a key={`${item.label}-${item.href}`} href={item.href}>{item.label}</a>
+                  ))}
+              </nav>
+            </div>
+            {design.showAnnouncements && <div className="preview-announcement">{design.announcementText}</div>}
+            <div className="preview-hero">
+              <p className="eyebrow">{design.customerCode} portal</p>
+              <h3>{design.heroTitle}</h3>
+              <p>{design.heroSubtitle}</p>
+            </div>
+            <div className="preview-sections">
+              {design.contentSections
+                .slice()
+                .sort((left, right) => left.sortOrder - right.sortOrder)
+                .map((section) => (
+                  <article key={`${section.sectionKey}-${section.sortOrder}`} className="preview-card">
+                    <span className="badge muted">{section.sectionKey}</span>
+                    <h4>{section.title}</h4>
+                    <p>{section.body}</p>
+                  </article>
+                ))}
+            </div>
+            <footer>
+              <strong>{design.footerText}</strong>
+              <span>{design.supportEmail}</span>
+            </footer>
+          </div>
+        </div>
+<<<<<<< ours
+<<<<<<< ours
 >>>>>>> theirs
 =======
 >>>>>>> theirs

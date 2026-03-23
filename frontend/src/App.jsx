@@ -5,6 +5,9 @@ import Dashboard from './pages/Dashboard';
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import PortalSitePreviewPage from './pages/PortalSitePreviewPage';
 
 export default function App() {
@@ -111,5 +114,51 @@ export default function App() {
 >>>>>>> theirs
 =======
   return <Dashboard session={session} logout={logout} />;
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+
+export default function App() {
+  const { session, logout, isAuthenticated } = useAuth();
+
+  return (
+    <main>
+      {!isAuthenticated ? (
+        <div className="container stack-lg">
+          <section className="hero-shell landing">
+            <div>
+              <p className="eyebrow">React + .NET + MSSQL starter</p>
+              <h1>Build web portals from scratch with configurable header, footer, and content.</h1>
+              <p className="hero-copy">
+                This starter is designed for multi-role portal management, where admins can manage experiences for employees and customers from one place.
+              </p>
+            </div>
+            <div className="hero-metrics">
+              <article className="summary-card">
+                <h3>Centralized builder</h3>
+                <p>Manage branding, menus, announcements, and content blocks per customer.</p>
+              </article>
+              <article className="summary-card">
+                <h3>Role-ready</h3>
+                <p>Includes Admin, Portal, and Customer roles aligned with your requested access model.</p>
+              </article>
+            </div>
+          </section>
+          <AuthPage />
+        </div>
+      ) : (
+        <Dashboard session={session} logout={logout} />
+      )}
+    </main>
+  );
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

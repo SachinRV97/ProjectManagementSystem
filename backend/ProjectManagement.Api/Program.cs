@@ -2,8 +2,17 @@
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -31,7 +40,16 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 builder.Services.AddScoped<IAdminManagementService, AdminManagementService>();
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -53,6 +71,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = jwt.Issuer,
             ValidAudience = jwt.Audience,
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key))
         };
 <<<<<<< ours
@@ -97,10 +118,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key)),
+            NameClaimType = System.Security.Claims.ClaimTypes.Name,
+            RoleClaimType = System.Security.Claims.ClaimTypes.Role
+        };
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     });
 
 builder.Services.AddAuthorization(options =>
 {
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -132,6 +172,22 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole(RoleNames.Admin, RoleNames.PortalAdmin, RoleNames.CustomerEmployee));
 
     options.AddPolicy("CanManageEmployees", policy =>
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+    options.AddPolicy("CanManagePortal", policy =>
+        policy.RequireRole(RoleNames.Admin, RoleNames.PortalAdmin, RoleNames.CustomerEmployee));
+
+    options.AddPolicy("CanManageUsers", policy =>
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         policy.RequireRole(RoleNames.Admin, RoleNames.CustomerAdmin));
 
     options.AddPolicy("CanManageCustomers", policy =>
@@ -139,6 +195,15 @@ builder.Services.AddAuthorization(options =>
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 =======
 >>>>>>> theirs
@@ -166,6 +231,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+=======
+app.UseHttpsRedirection();
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 app.UseCors("frontend");
 app.UseAuthentication();
 app.UseAuthorization();
@@ -179,7 +261,16 @@ using (var scope = app.Services.CreateScope())
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     DatabaseInitializer.EnsureDatabaseObjects(db);
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======

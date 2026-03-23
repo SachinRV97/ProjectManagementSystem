@@ -2,6 +2,9 @@
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import { useEffect, useState } from 'react';
 import { describeRole, getRoles } from '../services/access';
 
@@ -90,6 +93,82 @@ export default function RoleMatrix() {
 <<<<<<< ours
 >>>>>>> theirs
 =======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+const rows = [
+  {
+    role: 'Admin',
+    access: 'All access',
+    responsibilities: 'Manage platform configuration, customer tenants, portal design, and users.',
+  },
+  {
+    role: 'Portal-Admin',
+    access: 'Portal governance',
+    responsibilities: 'Manage portal structure and experience for employee and customer portals.',
+  },
+  {
+    role: 'Portal-Employee',
+    access: 'Customer operations',
+    responsibilities: 'Track customer onboarding, tenant activity, and portal rollout readiness.',
+  },
+  {
+    role: 'Customer-Admin',
+    access: 'Tenant user management',
+    responsibilities: 'Create and manage employee and customer users inside one customer account.',
+  },
+  {
+    role: 'Customer-Employee',
+    access: 'Portal designer',
+    responsibilities: 'Update the customer portal design, messaging, and content sections.',
+  },
+  {
+    role: 'Customer-User',
+    access: 'Portal consumption',
+    responsibilities: 'Register, log in, and use the portal like a normal application user.',
+  },
+];
+
+export default function RoleMatrix() {
+  return (
+    <section className="panel">
+      <div className="section-header">
+        <div>
+          <p className="eyebrow">Access model</p>
+          <h2>Role matrix</h2>
+        </div>
+        <span className="badge muted">6 roles included</span>
+      </div>
+
+      <div className="table-wrap">
+        <table className="role-table">
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th>Access</th>
+              <th>Responsibilities</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.role}>
+                <td>{row.role}</td>
+                <td>{row.access}</td>
+                <td>{row.responsibilities}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+<<<<<<< ours
+<<<<<<< ours
 >>>>>>> theirs
 =======
 >>>>>>> theirs

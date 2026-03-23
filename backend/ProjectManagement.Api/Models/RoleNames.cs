@@ -18,4 +18,29 @@ public static class RoleNames
         CustomerEmployee,
         CustomerUser
     ];
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+
+    public static readonly IReadOnlyDictionary<string, string[]> Capabilities = new Dictionary<string, string[]>
+    {
+        [Admin] = ["Full platform access", "Manage portals", "Manage customers", "Manage all users"],
+        [PortalAdmin] = ["Configure employee/customer portals", "Review portal layouts", "Oversee experience consistency"],
+        [PortalEmployee] = ["Manage customer records", "Review customer onboarding status"],
+        [CustomerAdmin] = ["Manage employees and end users", "Review tenant access"],
+        [CustomerEmployee] = ["Change portal design", "Update content blocks and menu links"],
+        [CustomerUser] = ["Register", "Login", "Use the customer portal"]
+    };
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 }

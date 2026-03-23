@@ -5,6 +5,9 @@ import { useAuth } from '../context/AuthContext';
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 export default function AuthPage() {
   const { login, registerCompany } = useAuth();
   const [isCompanyRegistration, setIsCompanyRegistration] = useState(false);
@@ -35,6 +38,12 @@ export default function AuthPage() {
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 const roles = [
   'Admin',
   'Portal-Admin',
@@ -46,7 +55,19 @@ const roles = [
 
 export default function AuthPage() {
   const { login, register } = useAuth();
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
   const [isRegister, setIsRegister] = useState(false);
+=======
+  const [mode, setMode] = useState('login');
+>>>>>>> theirs
+=======
+  const [mode, setMode] = useState('login');
+>>>>>>> theirs
+=======
+  const [mode, setMode] = useState('login');
+>>>>>>> theirs
   const [error, setError] = useState('');
   const [form, setForm] = useState({
     name: '',
@@ -54,6 +75,9 @@ export default function AuthPage() {
     password: '',
     role: 'Customer-User',
     customerCode: 'GLOBAL',
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -90,11 +114,35 @@ export default function AuthPage() {
 =======
 >>>>>>> theirs
     try {
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+  });
+
+  const isRegister = mode === 'register';
+
+  const submit = async (event) => {
+    event.preventDefault();
+    setError('');
+
+    try {
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
       if (isRegister) {
         await register(form);
       } else {
         await login(form.email, form.password);
       }
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
     } catch (e) {
       setError(e?.response?.data?.message ?? 'Unexpected error');
 <<<<<<< ours
@@ -107,10 +155,25 @@ export default function AuthPage() {
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+    } catch (requestError) {
+      setError(requestError?.response?.data?.message ?? 'Authentication failed.');
+>>>>>>> theirs
+=======
+    } catch (requestError) {
+      setError(requestError?.response?.data?.message ?? 'Authentication failed.');
+>>>>>>> theirs
+=======
+    } catch (requestError) {
+      setError(requestError?.response?.data?.message ?? 'Authentication failed.');
+>>>>>>> theirs
     }
   };
 
   return (
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -375,5 +438,83 @@ export default function AuthPage() {
 =======
 >>>>>>> theirs
     </section>
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+    <div className="auth-layout">
+      <section className="panel auth-marketing">
+        <p className="eyebrow">Reusable full-stack starter</p>
+        <h2>Build customer and employee portals from one admin-controlled platform.</h2>
+        <ul className="feature-list">
+          <li>React dashboard with portal designer preview</li>
+          <li>.NET API with JWT auth and role-based authorization</li>
+          <li>MSSQL-ready EF Core data model for users, customers, and portal configuration</li>
+        </ul>
+      </section>
+
+      <section className="panel auth-card">
+        <div className="section-header compact">
+          <div>
+            <p className="eyebrow">Access portal</p>
+            <h2>{isRegister ? 'Create account' : 'Login'}</h2>
+          </div>
+          <span className="badge muted">{isRegister ? 'Register' : 'Sign in'}</span>
+        </div>
+
+        <form onSubmit={submit} className="grid auth-form">
+          {isRegister && (
+            <label>
+              Name
+              <input required value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
+            </label>
+          )}
+
+          <label>
+            Email
+            <input required type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
+          </label>
+
+          <label>
+            Password
+            <input required type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
+          </label>
+
+          {isRegister && (
+            <>
+              <label>
+                Role
+                <select value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}>
+                  {roles.map((role) => (
+                    <option key={role} value={role}>{role}</option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                Customer code
+                <input value={form.customerCode} onChange={(event) => setForm({ ...form, customerCode: event.target.value.toUpperCase() })} />
+              </label>
+            </>
+          )}
+
+          <button type="submit">{isRegister ? 'Register and continue' : 'Login to dashboard'}</button>
+        </form>
+
+        {error && <p className="error">{error}</p>}
+
+        <button className="link" onClick={() => setMode(isRegister ? 'login' : 'register')}>
+          {isRegister ? 'Already have an account? Sign in' : 'Need a new account? Register'}
+        </button>
+      </section>
+    </div>
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
   );
 }

@@ -1,4 +1,6 @@
 {
+<<<<<<< ours
+<<<<<<< ours
   "profiles": {
     "ProjectManagement.Api": {
       "commandName": "Project",
@@ -10,3 +12,24 @@
     }
   }
 }
+=======
+=======
+>>>>>>> theirs
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "ProjectManagement.Api": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5000;https://localhost:7001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs

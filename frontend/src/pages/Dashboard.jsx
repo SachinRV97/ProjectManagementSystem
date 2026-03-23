@@ -2,6 +2,9 @@
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 import { useEffect, useRef, useState } from 'react';
 import CompanyManagementPanel from '../components/CompanyManagementPanel';
 import PortalDesigner from '../components/PortalDesigner';
@@ -307,6 +310,49 @@ export default function Dashboard({ session, logout }) {
 <<<<<<< ours
 >>>>>>> theirs
 =======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+import CustomerDirectory from '../components/CustomerDirectory';
+import PortalDesigner from '../components/PortalDesigner';
+import RoleMatrix from '../components/RoleMatrix';
+import UserManagement from '../components/UserManagement';
+
+export default function Dashboard({ session, logout }) {
+  const showUserManagement = ['Admin', 'Customer-Admin'].includes(session.role);
+  const showCustomerDirectory = ['Admin', 'Portal-Employee'].includes(session.role);
+
+  return (
+    <div className="container stack-lg">
+      <section className="hero-shell">
+        <div>
+          <p className="eyebrow">Project Management System</p>
+          <h1>Portal administration workspace</h1>
+          <p className="hero-copy">
+            Control portal design, tenant users, and customer setup from a single web application starter.
+          </p>
+        </div>
+        <div className="hero-actions">
+          <span className="badge">{session.name}</span>
+          <span className="badge muted">{session.role}</span>
+          <span className="badge muted">{session.customerCode}</span>
+          <button onClick={logout}>Logout</button>
+        </div>
+      </section>
+
+      <RoleMatrix />
+      <PortalDesigner session={session} />
+      {showUserManagement && <UserManagement session={session} />}
+      {showCustomerDirectory && <CustomerDirectory />}
+<<<<<<< ours
+<<<<<<< ours
 >>>>>>> theirs
 =======
 >>>>>>> theirs

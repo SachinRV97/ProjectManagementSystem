@@ -3,6 +3,9 @@
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
   --app-ink: #14213d;
   --app-muted: #5b6475;
   --app-line: rgba(20, 33, 61, 0.08);
@@ -752,6 +755,400 @@ button {
 <<<<<<< ours
 >>>>>>> theirs
 =======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 22%),
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.16), transparent 18%),
+    #f8fafc;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  cursor: pointer;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+}
+
+button.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 12px;
+  padding: 0.85rem 0.95rem;
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: #334155;
+  font-weight: 600;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.container {
+  width: min(1280px, calc(100vw - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.stack-lg {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.panel,
+.summary-card,
+.hero-shell {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.panel {
+  padding: 1.5rem;
+}
+
+.hero-shell {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  padding: 1.8rem;
+}
+
+.hero-shell.landing {
+  align-items: stretch;
+}
+
+.hero-copy {
+  max-width: 54rem;
+  color: #475569;
+  line-height: 1.65;
+}
+
+.hero-metrics,
+.card-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.summary-card {
+  padding: 1.25rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #6366f1;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-header.compact,
+.toolbar.compact {
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.badge.muted {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.auth-layout,
+.dashboard-grid.two-pane,
+.designer-layout {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.auth-layout {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.auth-card,
+.auth-marketing,
+.nested-panel,
+.preview-shell {
+  border-radius: 20px;
+}
+
+.auth-card form,
+.auth-form,
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.feature-list {
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+  color: #475569;
+  line-height: 1.65;
+}
+
+.link {
+  margin-top: 1rem;
+  background: transparent;
+  color: #2563eb;
+  padding: 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.nested-panel,
+.preview-shell {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+}
+
+.designer-layout {
+  grid-template-columns: 1.2fr 0.8fr;
+}
+
+.nav-row {
+  grid-template-columns: 1.2fr 1.6fr 110px 120px auto;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.section-card-editor {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1rem;
+  background: white;
+  display: grid;
+  gap: 0.8rem;
+  margin-bottom: 0.85rem;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 600;
+}
+
+.toggle-row input {
+  width: auto;
+}
+
+.toggle-row.inline {
+  white-space: nowrap;
+}
+
+.portal-preview {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #dbeafe;
+}
+
+.preview-topbar {
+  background: var(--secondary);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.preview-topbar img {
+  height: 38px;
+  object-fit: contain;
+}
+
+.preview-topbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.preview-topbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.preview-announcement {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+.preview-hero {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 1.5rem 1.25rem;
+}
+
+.preview-sections {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.preview-card {
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+  padding: 1rem;
+  background: #f8fafc;
+}
+
+.portal-preview footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.role-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.role-table th,
+.role-table td {
+  text-align: left;
+  padding: 0.9rem 0.85rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+.compact-table th,
+.compact-table td {
+  padding: 0.7rem;
+}
+
+.error {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.success-text {
+  color: #059669;
+  font-weight: 700;
+}
+
+.muted-text {
+  color: #64748b;
+}
+
+ul {
+  color: #475569;
+}
+
+@media (max-width: 1024px) {
+  .hero-shell,
+  .auth-layout,
+  .designer-layout,
+  .dashboard-grid.two-pane,
+  .grid.two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-row {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-preview footer,
+  .preview-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+<<<<<<< ours
+<<<<<<< ours
 >>>>>>> theirs
 =======
 >>>>>>> theirs

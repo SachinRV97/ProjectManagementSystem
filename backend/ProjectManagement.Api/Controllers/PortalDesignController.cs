@@ -2,9 +2,18 @@
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -28,6 +37,9 @@ namespace ProjectManagement.Api.Controllers;
 [Authorize]
 public class PortalDesignController(AppDbContext db) : ControllerBase
 {
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -117,6 +129,37 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
             ?? await db.PortalDesigns.AsNoTracking().FirstAsync(item => item.CustomerCode == "GLOBAL");
 >>>>>>> theirs
 
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+    [HttpGet("me")]
+    public async Task<ActionResult<PortalDesignResponse>> GetMyPortalDesign()
+    {
+        var customerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
+        var design = await GetDesignForCustomerAsync(customerCode);
+        return Ok(ToResponse(design));
+    }
+
+    [HttpGet("{customerCode}")]
+    [Authorize(Policy = "CanManagePortal")]
+    public async Task<ActionResult<PortalDesignResponse>> GetPortalDesign(string customerCode)
+    {
+        var normalizedCustomerCode = customerCode.Trim().ToUpperInvariant();
+        if (!CanAccessRequestedCustomer(normalizedCustomerCode))
+        {
+            return Forbid();
+        }
+
+        var design = await GetDesignForCustomerAsync(normalizedCustomerCode);
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         return Ok(ToResponse(design));
     }
 
@@ -124,6 +167,9 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
     [Authorize(Policy = "CanManagePortal")]
     public async Task<ActionResult<PortalDesignResponse>> UpsertPortalDesign(string customerCode, UpsertPortalDesignRequest request)
     {
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -156,10 +202,25 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+        var normalizedCustomerCode = customerCode.Trim().ToUpperInvariant();
+        if (!CanAccessRequestedCustomer(normalizedCustomerCode))
+>>>>>>> theirs
+=======
+        var normalizedCustomerCode = customerCode.Trim().ToUpperInvariant();
+        if (!CanAccessRequestedCustomer(normalizedCustomerCode))
+>>>>>>> theirs
+=======
+        var normalizedCustomerCode = customerCode.Trim().ToUpperInvariant();
+        if (!CanAccessRequestedCustomer(normalizedCustomerCode))
+>>>>>>> theirs
         {
             return Forbid();
         }
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -482,5 +543,115 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 >>>>>>> theirs
 =======
             design.UpdatedAtUtc);
+>>>>>>> theirs
+=======
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+        var design = await db.PortalDesigns
+            .Include(item => item.NavigationItems)
+            .Include(item => item.ContentSections)
+            .FirstOrDefaultAsync(item => item.CustomerCode == normalizedCustomerCode);
+
+        if (design is null)
+        {
+            design = new PortalDesign { CustomerCode = normalizedCustomerCode };
+            db.PortalDesigns.Add(design);
+        }
+
+        design.PortalName = request.PortalName.Trim();
+        design.HeaderTitle = request.HeaderTitle.Trim();
+        design.FooterText = request.FooterText.Trim();
+        design.PrimaryColor = request.PrimaryColor.Trim();
+        design.SecondaryColor = request.SecondaryColor.Trim();
+        design.HeroTitle = request.HeroTitle.Trim();
+        design.HeroSubtitle = request.HeroSubtitle.Trim();
+        design.AnnouncementText = request.AnnouncementText.Trim();
+        design.SupportEmail = request.SupportEmail.Trim();
+        design.LogoUrl = request.LogoUrl.Trim();
+        design.ShowAnnouncements = request.ShowAnnouncements;
+        design.UpdatedAtUtc = DateTime.UtcNow;
+
+        design.NavigationItems.Clear();
+        foreach (var item in request.NavigationItems.OrderBy(item => item.SortOrder))
+        {
+            design.NavigationItems.Add(new PortalNavigationItem
+            {
+                Label = item.Label.Trim(),
+                Href = item.Href.Trim(),
+                SortOrder = item.SortOrder,
+                OpenInNewTab = item.OpenInNewTab
+            });
+        }
+
+        design.ContentSections.Clear();
+        foreach (var section in request.ContentSections.OrderBy(section => section.SortOrder))
+        {
+            design.ContentSections.Add(new PortalContentSection
+            {
+                SectionKey = section.SectionKey.Trim(),
+                Title = section.Title.Trim(),
+                Body = section.Body.Trim(),
+                SortOrder = section.SortOrder
+            });
+        }
+
+        await db.SaveChangesAsync();
+        return Ok(ToResponse(design));
+    }
+
+    private bool CanAccessRequestedCustomer(string requestedCustomerCode)
+    {
+        var userRole = User.FindFirstValue(ClaimTypes.Role);
+        var userCustomerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
+
+        return userRole == RoleNames.Admin || userRole == RoleNames.PortalAdmin || userCustomerCode == requestedCustomerCode;
+    }
+
+    private async Task<PortalDesign> GetDesignForCustomerAsync(string customerCode)
+    {
+        return await db.PortalDesigns
+            .AsNoTracking()
+            .Include(item => item.NavigationItems.OrderBy(nav => nav.SortOrder))
+            .Include(item => item.ContentSections.OrderBy(section => section.SortOrder))
+            .FirstOrDefaultAsync(item => item.CustomerCode == customerCode)
+            ?? await db.PortalDesigns
+                .AsNoTracking()
+                .Include(item => item.NavigationItems.OrderBy(nav => nav.SortOrder))
+                .Include(item => item.ContentSections.OrderBy(section => section.SortOrder))
+                .FirstAsync(item => item.CustomerCode == "GLOBAL");
+    }
+
+    private static PortalDesignResponse ToResponse(PortalDesign design) =>
+        new(
+            design.Id,
+            design.CustomerCode,
+            design.PortalName,
+            design.HeaderTitle,
+            design.FooterText,
+            design.PrimaryColor,
+            design.SecondaryColor,
+            design.HeroTitle,
+            design.HeroSubtitle,
+            design.AnnouncementText,
+            design.SupportEmail,
+            design.LogoUrl,
+            design.ShowAnnouncements,
+            design.UpdatedAtUtc,
+            design.NavigationItems
+                .OrderBy(item => item.SortOrder)
+                .Select(item => new PortalNavigationItemDto(item.Id, item.Label, item.Href, item.SortOrder, item.OpenInNewTab))
+                .ToArray(),
+            design.ContentSections
+                .OrderBy(item => item.SortOrder)
+                .Select(item => new PortalContentSectionDto(item.Id, item.SectionKey, item.Title, item.Body, item.SortOrder))
+                .ToArray());
+<<<<<<< ours
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

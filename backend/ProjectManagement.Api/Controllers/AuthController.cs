@@ -2,9 +2,18 @@
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
@@ -23,6 +32,9 @@ namespace ProjectManagement.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService) : ControllerBase
 {
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -48,12 +60,21 @@ public class AuthController(IAuthService authService) : ControllerBase
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     [HttpPost("register")]
     public async Task<ActionResult<AuthResponse>> Register(RegisterRequest request)
     {
         try
         {
             return Ok(await authService.RegisterAsync(request));
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -79,6 +100,12 @@ public class AuthController(IAuthService authService) : ControllerBase
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         }
         catch (InvalidOperationException exception)
         {
@@ -86,6 +113,9 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
     }
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
@@ -112,6 +142,12 @@ public class AuthController(IAuthService authService) : ControllerBase
 >>>>>>> theirs
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest request)
     {
@@ -128,6 +164,9 @@ public class AuthController(IAuthService authService) : ControllerBase
 <<<<<<< ours
 <<<<<<< ours
 <<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 
     private Guid GetCurrentUserId()
     {
@@ -140,6 +179,12 @@ public class AuthController(IAuthService authService) : ControllerBase
 
         return userId;
     }
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 =======
