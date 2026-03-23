@@ -3,16 +3,30 @@ namespace ProjectManagement.Api.Models;
 public class PortalDesign
 {
     public Guid Id { get; set; } = Guid.NewGuid();
+<<<<<<< ours
+<<<<<<< ours
     public string CompanyCode { get; set; } = "GLOBAL";
     public string CustomerCode { get; set; } = "GLOBAL";
     public string SiteName { get; set; } = "Unified Project Management Portal";
     public string SiteSlug { get; set; } = "unified-project-management-portal";
+=======
+    public string CustomerCode { get; set; } = "GLOBAL";
+>>>>>>> theirs
+=======
+    public string CustomerCode { get; set; } = "GLOBAL";
+>>>>>>> theirs
     public string HeaderTitle { get; set; } = "Project Management Portal";
     public string FooterText { get; set; } = "© 2026 Project Management";
     public string PrimaryColor { get; set; } = "#1d4ed8";
     public string AccentColor { get; set; } = "#0f172a";
     public bool ShowAnnouncements { get; set; } = true;
     public string? AnnouncementText { get; set; } = "Welcome to your workspace";
+<<<<<<< ours
+<<<<<<< ours
     public string? PageConfigurationsJson { get; set; }
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     public DateTime UpdatedAtUtc { get; set; } = DateTime.UtcNow;
 }

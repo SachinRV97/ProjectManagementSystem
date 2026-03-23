@@ -14,6 +14,8 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
+<<<<<<< ours
+<<<<<<< ours
     public async Task<IReadOnlyList<RoleResponse>> GetAvailableRolesAsync()
     {
         var roles = await db.Roles
@@ -110,27 +112,53 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
 
         var targetRole = await FindActiveRoleAsync(request.Role);
         if (targetRole is null)
+=======
+    public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+    {
+        if (!RoleNames.All.Contains(request.Role))
+>>>>>>> theirs
+=======
+    public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+    {
+        if (!RoleNames.All.Contains(request.Role))
+>>>>>>> theirs
         {
             throw new InvalidOperationException("Invalid role selected.");
         }
 
+<<<<<<< ours
+<<<<<<< ours
         if (!RoleFlowRules.CanAssignRole(creator.Role, targetRole.Name))
         {
             throw new InvalidOperationException("Your role cannot create the selected user type.");
         }
 
         var email = NormalizeEmail(request.Email);
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
         if (await db.Users.AnyAsync(user => user.Email == email))
         {
             throw new InvalidOperationException("Email already exists.");
         }
 
+<<<<<<< ours
+<<<<<<< ours
         var customerCode = ResolveCustomerCode(targetRole.Name, request.CustomerCode);
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         var user = new ApplicationUser
         {
             Name = request.Name.Trim(),
             Email = email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+<<<<<<< ours
+<<<<<<< ours
             Role = targetRole.Name,
             CompanyCode = creator.CompanyCode,
             CustomerCode = customerCode
@@ -152,11 +180,34 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             user.Role,
             user.CompanyCode,
             user.CustomerCode);
+=======
+=======
+>>>>>>> theirs
+            Role = request.Role,
+            CustomerCode = string.IsNullOrWhiteSpace(request.CustomerCode) ? "GLOBAL" : request.CustomerCode.Trim().ToUpperInvariant()
+        };
+
+        db.Users.Add(user);
+        await db.SaveChangesAsync();
+
+        return BuildAuthResponse(user);
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     }
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request)
     {
+<<<<<<< ours
+<<<<<<< ours
         var email = NormalizeEmail(request.Email);
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
+=======
+        var email = request.Email.Trim().ToLowerInvariant();
+>>>>>>> theirs
         var user = await db.Users.FirstOrDefaultAsync(user => user.Email == email)
             ?? throw new InvalidOperationException("Invalid email or password.");
 
@@ -165,6 +216,8 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             throw new InvalidOperationException("Invalid email or password.");
         }
 
+<<<<<<< ours
+<<<<<<< ours
         if (!user.IsLoginAllowed)
         {
             throw new InvalidOperationException("Your login has been blocked by the administrator.");
@@ -356,6 +409,27 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             claims.Add(new Claim(CustomClaimTypes.PortalScope, PortalScopeValues.OwnCustomer));
         }
 
+=======
+=======
+>>>>>>> theirs
+        return BuildAuthResponse(user);
+    }
+
+    private AuthResponse BuildAuthResponse(ApplicationUser user)
+    {
+        var claims = new List<Claim>
+        {
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(ClaimTypes.Name, user.Name),
+            new(ClaimTypes.Role, user.Role),
+            new("customer_code", user.CustomerCode ?? "GLOBAL")
+        };
+
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
@@ -365,6 +439,8 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             expires: DateTime.UtcNow.AddHours(8),
             signingCredentials: credentials);
 
+<<<<<<< ours
+<<<<<<< ours
         return new AuthResponse(
             new JwtSecurityTokenHandler().WriteToken(token),
             user.Name,
@@ -386,4 +462,12 @@ public class AuthService(AppDbContext db, IOptions<JwtOptions> jwtOptions) : IAu
             role.Description,
             role.GetPermissions(),
             role.LimitPortalManagementToOwnCustomer);
+=======
+        return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
+    }
+>>>>>>> theirs
+=======
+        return new AuthResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Name, user.Email, user.Role, user.CustomerCode);
+    }
+>>>>>>> theirs
 }

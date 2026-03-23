@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
+<<<<<<< ours
+<<<<<<< ours
 export default function AuthPage() {
   const { login, registerCompany } = useAuth();
   const [isCompanyRegistration, setIsCompanyRegistration] = useState(false);
@@ -24,11 +26,39 @@ export default function AuthPage() {
     adminName: '',
     adminEmail: '',
     adminPassword: '',
+=======
+=======
+>>>>>>> theirs
+const roles = [
+  'Admin',
+  'Portal-Admin',
+  'Portal-Employee',
+  'Customer-Admin',
+  'Customer-Employee',
+  'Customer-User',
+];
+
+export default function AuthPage() {
+  const { login, register } = useAuth();
+  const [isRegister, setIsRegister] = useState(false);
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'Customer-User',
+    customerCode: 'GLOBAL',
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
   });
 
   const submit = async (event) => {
     event.preventDefault();
     setError('');
+<<<<<<< ours
+<<<<<<< ours
 
     try {
       if (isCompanyRegistration) {
@@ -38,10 +68,27 @@ export default function AuthPage() {
       }
     } catch (e) {
       setError(e?.response?.data?.message ?? 'API is not reachable. Start the backend on http://localhost:5000 and try again.');
+=======
+=======
+>>>>>>> theirs
+    try {
+      if (isRegister) {
+        await register(form);
+      } else {
+        await login(form.email, form.password);
+      }
+    } catch (e) {
+      setError(e?.response?.data?.message ?? 'Unexpected error');
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     }
   };
 
   return (
+<<<<<<< ours
+<<<<<<< ours
     <section className="card border-0 auth-card shadow-lg">
       <div className="card-body p-4 p-lg-5">
         <div className="d-flex flex-wrap gap-2 mb-4">
@@ -243,6 +290,54 @@ export default function AuthPage() {
           </p>
         </div>
       </div>
+=======
+=======
+>>>>>>> theirs
+    <section className="panel auth-card">
+      <h2>{isRegister ? 'Register account' : 'Login'}</h2>
+      <form onSubmit={submit}>
+        {isRegister && (
+          <label>
+            Name
+            <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+          </label>
+        )}
+        <label>
+          Email
+          <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+        </label>
+        <label>
+          Password
+          <input type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        </label>
+
+        {isRegister && (
+          <>
+            <label>
+              Role
+              <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
+                {roles.map((role) => (
+                  <option key={role} value={role}>{role}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Customer Code
+              <input value={form.customerCode} onChange={(e) => setForm({ ...form, customerCode: e.target.value })} />
+            </label>
+          </>
+        )}
+
+        <button type="submit">{isRegister ? 'Create account' : 'Sign in'}</button>
+      </form>
+      {error && <p className="error">{error}</p>}
+      <button className="link" onClick={() => setIsRegister((s) => !s)}>
+        {isRegister ? 'Already have account? Login' : 'Need account? Register'}
+      </button>
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     </section>
   );
 }

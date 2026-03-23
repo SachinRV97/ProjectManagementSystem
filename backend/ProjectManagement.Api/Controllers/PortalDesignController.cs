@@ -1,6 +1,12 @@
+<<<<<<< ours
+<<<<<<< ours
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +22,8 @@ namespace ProjectManagement.Api.Controllers;
 [Authorize]
 public class PortalDesignController(AppDbContext db) : ControllerBase
 {
+<<<<<<< ours
+<<<<<<< ours
     private static readonly JsonSerializerOptions PageJsonOptions = new(JsonSerializerDefaults.Web);
     private static readonly HashSet<string> AllowedThemePresets = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -29,10 +37,22 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
     public async Task<ActionResult<PortalDesignResponse>> GetMyPortalDesign()
     {
         var companyCode = User.FindFirstValue(CustomClaimTypes.CompanyCode) ?? "GLOBAL";
+=======
+    [HttpGet("me")]
+    public async Task<ActionResult<PortalDesignResponse>> GetMyPortalDesign()
+    {
+>>>>>>> theirs
+=======
+    [HttpGet("me")]
+    public async Task<ActionResult<PortalDesignResponse>> GetMyPortalDesign()
+    {
+>>>>>>> theirs
         var customerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
 
         var design = await db.PortalDesigns
             .AsNoTracking()
+<<<<<<< ours
+<<<<<<< ours
             .FirstOrDefaultAsync(item =>
                 item.CompanyCode == companyCode &&
                 item.CustomerCode == customerCode)
@@ -60,6 +80,14 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
         {
             return NotFound(new { message = "Portal site was not found." });
         }
+=======
+            .FirstOrDefaultAsync(item => item.CustomerCode == customerCode)
+            ?? await db.PortalDesigns.AsNoTracking().FirstAsync(item => item.CustomerCode == "GLOBAL");
+>>>>>>> theirs
+=======
+            .FirstOrDefaultAsync(item => item.CustomerCode == customerCode)
+            ?? await db.PortalDesigns.AsNoTracking().FirstAsync(item => item.CustomerCode == "GLOBAL");
+>>>>>>> theirs
 
         return Ok(ToResponse(design));
     }
@@ -68,16 +96,32 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
     [Authorize(Policy = "CanManagePortal")]
     public async Task<ActionResult<PortalDesignResponse>> UpsertPortalDesign(string customerCode, UpsertPortalDesignRequest request)
     {
+<<<<<<< ours
+<<<<<<< ours
         var companyCode = User.FindFirstValue(CustomClaimTypes.CompanyCode) ?? "GLOBAL";
         customerCode = customerCode.Trim().ToUpperInvariant();
         var userCustomerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
         var isOwnCustomerScope = User.HasClaim(CustomClaimTypes.PortalScope, PortalScopeValues.OwnCustomer);
 
         if (isOwnCustomerScope && userCustomerCode != customerCode)
+=======
+=======
+>>>>>>> theirs
+        customerCode = customerCode.Trim().ToUpperInvariant();
+        var userRole = User.FindFirstValue(ClaimTypes.Role);
+        var userCustomerCode = User.FindFirstValue("customer_code") ?? "GLOBAL";
+
+        if (userRole == RoleNames.CustomerEmployee && userCustomerCode != customerCode)
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         {
             return Forbid();
         }
 
+<<<<<<< ours
+<<<<<<< ours
         var design = await db.PortalDesigns.FirstOrDefaultAsync(item =>
             item.CompanyCode == companyCode &&
             item.CustomerCode == customerCode);
@@ -94,17 +138,37 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 
         design.SiteName = NormalizeOrFallback(request.SiteName, request.HeaderTitle);
         design.SiteSlug = await GenerateUniqueSiteSlugAsync(design.SiteName, design.Id);
+=======
+=======
+>>>>>>> theirs
+        var design = await db.PortalDesigns.FirstOrDefaultAsync(item => item.CustomerCode == customerCode);
+        if (design is null)
+        {
+            design = new PortalDesign { CustomerCode = customerCode };
+            db.PortalDesigns.Add(design);
+        }
+
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         design.HeaderTitle = request.HeaderTitle;
         design.FooterText = request.FooterText;
         design.PrimaryColor = request.PrimaryColor;
         design.AccentColor = request.AccentColor;
         design.ShowAnnouncements = request.ShowAnnouncements;
         design.AnnouncementText = request.AnnouncementText;
+<<<<<<< ours
+<<<<<<< ours
         design.PageConfigurationsJson = SerializePages(
             NormalizePages(
                 request.Pages,
                 request.HeaderTitle,
                 request.AnnouncementText));
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         design.UpdatedAtUtc = DateTime.UtcNow;
 
         await db.SaveChangesAsync();
@@ -116,14 +180,22 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
         new(
             design.Id,
             design.CustomerCode,
+<<<<<<< ours
+<<<<<<< ours
             ResolveSiteName(design),
             ResolveSiteSlug(design),
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
             design.HeaderTitle,
             design.FooterText,
             design.PrimaryColor,
             design.AccentColor,
             design.ShowAnnouncements,
             design.AnnouncementText,
+<<<<<<< ours
+<<<<<<< ours
             ReadPages(design.PageConfigurationsJson, design.HeaderTitle, design.AnnouncementText),
             design.UpdatedAtUtc);
 
@@ -333,4 +405,10 @@ public class PortalDesignController(AppDbContext db) : ControllerBase
 
     private static string NormalizeOrFallback(string? value, string fallback) =>
         string.IsNullOrWhiteSpace(value) ? fallback : value.Trim();
+=======
+            design.UpdatedAtUtc);
+>>>>>>> theirs
+=======
+            design.UpdatedAtUtc);
+>>>>>>> theirs
 }

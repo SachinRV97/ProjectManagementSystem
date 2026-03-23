@@ -1,5 +1,11 @@
+<<<<<<< ours
+<<<<<<< ours
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +21,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<IAuthService, AuthService>();
+<<<<<<< ours
+<<<<<<< ours
 builder.Services.AddScoped<IAdminManagementService, AdminManagementService>();
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -31,6 +43,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = jwt.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key))
         };
+<<<<<<< ours
+<<<<<<< ours
 
         options.Events = new JwtBearerEvents
         {
@@ -61,10 +75,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 }
             }
         };
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     });
 
 builder.Services.AddAuthorization(options =>
 {
+<<<<<<< ours
+<<<<<<< ours
     options.AddPolicy("GlobalAdminOnly", policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(RoleNames.Admin) &&
@@ -81,6 +101,21 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("CanManageCustomers", policy =>
         policy.RequireClaim(CustomClaimTypes.Permission, PermissionNames.ManageCustomers));
+=======
+=======
+>>>>>>> theirs
+    options.AddPolicy("CanManagePortal", policy =>
+        policy.RequireRole(RoleNames.Admin, RoleNames.PortalAdmin, RoleNames.CustomerEmployee));
+
+    options.AddPolicy("CanManageEmployees", policy =>
+        policy.RequireRole(RoleNames.Admin, RoleNames.CustomerAdmin));
+
+    options.AddPolicy("CanManageCustomers", policy =>
+        policy.RequireRole(RoleNames.Admin, RoleNames.PortalEmployee));
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 });
 
 builder.Services.AddCors(options =>
@@ -110,7 +145,13 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+<<<<<<< ours
+<<<<<<< ours
     DatabaseInitializer.EnsureDatabaseObjects(db);
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     DbSeeder.Seed(db);
 }
 

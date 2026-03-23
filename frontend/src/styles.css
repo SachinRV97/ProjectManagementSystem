@@ -1,13 +1,23 @@
 :root {
+<<<<<<< ours
+<<<<<<< ours
   --app-ink: #14213d;
   --app-muted: #5b6475;
   --app-line: rgba(20, 33, 61, 0.08);
   --app-panel: rgba(255, 255, 255, 0.88);
   --app-glow: #ffbf69;
+=======
+  font-family: Inter, system-ui, Arial, sans-serif;
+>>>>>>> theirs
+=======
+  font-family: Inter, system-ui, Arial, sans-serif;
+>>>>>>> theirs
 }
 
 body {
   margin: 0;
+<<<<<<< ours
+<<<<<<< ours
   min-height: 100vh;
   color: var(--app-ink);
   background:
@@ -335,10 +345,81 @@ body {
   color: #0f172a;
   background: #fff;
   border-color: transparent;
+=======
+=======
+>>>>>>> theirs
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.panel {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 16px 0;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+.auth-card form,
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
+input,
+select,
+button {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+button {
+  background: #1d4ed8;
+  color: white;
+  cursor: pointer;
+}
+
+.link {
+  margin-top: 12px;
+  background: transparent;
+  border: none;
+  color: #1d4ed8;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview {
+  margin-top: 16px;
+  border: 2px solid;
+  border-radius: 10px;
+  overflow: hidden;
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 }
 
 .preview header,
 .preview footer {
+<<<<<<< ours
+<<<<<<< ours
   padding: 0.9rem 1rem;
   color: #fff;
   font-weight: 700;
@@ -620,4 +701,28 @@ body {
     flex-direction: column;
     gap: 0.4rem;
   }
+=======
+=======
+>>>>>>> theirs
+  color: white;
+  padding: 10px;
+  font-weight: 600;
+}
+
+.preview main {
+  padding: 16px;
+  min-height: 120px;
+}
+
+.announcement {
+  background: #fffbeb;
+  padding: 10px;
+}
+
+.error {
+  color: #dc2626;
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 }

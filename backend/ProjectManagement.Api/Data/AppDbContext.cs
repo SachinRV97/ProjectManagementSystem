@@ -5,13 +5,21 @@ namespace ProjectManagement.Api.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
+<<<<<<< ours
+<<<<<<< ours
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<AppRole> Roles => Set<AppRole>();
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     public DbSet<ApplicationUser> Users => Set<ApplicationUser>();
     public DbSet<PortalDesign> PortalDesigns => Set<PortalDesign>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+<<<<<<< ours
+<<<<<<< ours
         modelBuilder.Entity<Company>(company =>
         {
             company.ToTable("Company", "Master");
@@ -64,11 +72,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .Property(user => user.Email)
             .HasMaxLength(150);
 
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
         modelBuilder.Entity<ApplicationUser>()
             .HasIndex(user => user.Email)
             .IsUnique();
 
         modelBuilder.Entity<PortalDesign>()
+<<<<<<< ours
+<<<<<<< ours
             .Property(design => design.SiteName)
             .HasMaxLength(150);
 
@@ -86,6 +100,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<PortalDesign>()
             .HasIndex(design => new { design.CompanyCode, design.CustomerCode })
+=======
+            .HasIndex(design => design.CustomerCode)
+>>>>>>> theirs
+=======
+            .HasIndex(design => design.CustomerCode)
+>>>>>>> theirs
             .IsUnique();
     }
 }

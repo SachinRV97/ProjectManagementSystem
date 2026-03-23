@@ -1,5 +1,7 @@
 namespace ProjectManagement.Api.Dtos;
 
+<<<<<<< ours
+<<<<<<< ours
 public record RegisterCompanyRequest(
     string CompanyName,
     string CompanyCode,
@@ -51,3 +53,13 @@ public record RoleResponse(
     string? Description,
     string[] Permissions,
     bool LimitPortalManagementToOwnCustomer);
+=======
+public record RegisterRequest(string Name, string Email, string Password, string Role, string? CustomerCode);
+public record LoginRequest(string Email, string Password);
+public record AuthResponse(string Token, string Name, string Email, string Role, string? CustomerCode);
+>>>>>>> theirs
+=======
+public record RegisterRequest(string Name, string Email, string Password, string Role, string? CustomerCode);
+public record LoginRequest(string Email, string Password);
+public record AuthResponse(string Token, string Name, string Email, string Role, string? CustomerCode);
+>>>>>>> theirs

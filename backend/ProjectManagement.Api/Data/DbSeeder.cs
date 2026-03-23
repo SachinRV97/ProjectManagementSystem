@@ -4,6 +4,8 @@ namespace ProjectManagement.Api.Data;
 
 public static class DbSeeder
 {
+<<<<<<< ours
+<<<<<<< ours
     private static readonly (string Name, string Description, bool CanManagePortal, bool CanManageEmployees, bool CanManageCustomers, bool LimitPortalManagementToOwnCustomer, int DisplayOrder)[] DefaultRoles =
     [
         (RoleNames.Admin, "All access", true, true, true, false, 1),
@@ -45,6 +47,14 @@ public static class DbSeeder
             });
         }
 
+=======
+    public static void Seed(AppDbContext db)
+    {
+>>>>>>> theirs
+=======
+    public static void Seed(AppDbContext db)
+    {
+>>>>>>> theirs
         if (!db.Users.Any())
         {
             db.Users.Add(new ApplicationUser
@@ -53,8 +63,16 @@ public static class DbSeeder
                 Email = "admin@system.local",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
                 Role = RoleNames.Admin,
+<<<<<<< ours
+<<<<<<< ours
                 CompanyCode = CompanyCodes.Global,
                 CustomerCode = CompanyCodes.Global
+=======
+                CustomerCode = "GLOBAL"
+>>>>>>> theirs
+=======
+                CustomerCode = "GLOBAL"
+>>>>>>> theirs
             });
         }
 
@@ -62,10 +80,18 @@ public static class DbSeeder
         {
             db.PortalDesigns.Add(new PortalDesign
             {
+<<<<<<< ours
+<<<<<<< ours
                 CompanyCode = CompanyCodes.Global,
                 CustomerCode = CompanyCodes.Global,
                 SiteName = "Unified Project Management Portal",
                 SiteSlug = "unified-project-management-portal",
+=======
+                CustomerCode = "GLOBAL",
+>>>>>>> theirs
+=======
+                CustomerCode = "GLOBAL",
+>>>>>>> theirs
                 HeaderTitle = "Unified Project Management Portal",
                 FooterText = "© 2026 Unified Portal",
                 PrimaryColor = "#1d4ed8",

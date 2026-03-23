@@ -1,6 +1,12 @@
+<<<<<<< ours
+<<<<<<< ours
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagement.Api.Dtos;
 using ProjectManagement.Api.Services;
@@ -11,6 +17,8 @@ namespace ProjectManagement.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService) : ControllerBase
 {
+<<<<<<< ours
+<<<<<<< ours
     [AllowAnonymous]
     [HttpGet("roles")]
     public async Task<ActionResult<IReadOnlyList<RoleResponse>>> GetRoles()
@@ -25,6 +33,17 @@ public class AuthController(IAuthService authService) : ControllerBase
         try
         {
             return Ok(await authService.GetAssignableRolesAsync(GetCurrentUserId()));
+=======
+=======
+>>>>>>> theirs
+    [HttpPost("register")]
+    public async Task<ActionResult<AuthResponse>> Register(RegisterRequest request)
+    {
+        try
+        {
+            return Ok(await authService.RegisterAsync(request));
+<<<<<<< ours
+>>>>>>> theirs
         }
         catch (InvalidOperationException exception)
         {
@@ -32,6 +51,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
     }
 
+<<<<<<< ours
     [AllowAnonymous]
     [HttpPost("register-company")]
     public async Task<ActionResult<AuthResponse>> RegisterCompany(RegisterCompanyRequest request)
@@ -39,6 +59,8 @@ public class AuthController(IAuthService authService) : ControllerBase
         try
         {
             return Ok(await authService.RegisterCompanyAsync(request));
+=======
+>>>>>>> theirs
         }
         catch (InvalidOperationException exception)
         {
@@ -46,6 +68,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
     }
 
+<<<<<<< ours
     [Authorize]
     [HttpPost("register-user")]
     public async Task<ActionResult<RegisteredUserResponse>> RegisterUser(RegisterUserRequest request)
@@ -61,6 +84,10 @@ public class AuthController(IAuthService authService) : ControllerBase
     }
 
     [AllowAnonymous]
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest request)
     {
@@ -73,6 +100,8 @@ public class AuthController(IAuthService authService) : ControllerBase
             return BadRequest(new { message = exception.Message });
         }
     }
+<<<<<<< ours
+<<<<<<< ours
 
     private Guid GetCurrentUserId()
     {
@@ -85,4 +114,8 @@ public class AuthController(IAuthService authService) : ControllerBase
 
         return userId;
     }
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 }

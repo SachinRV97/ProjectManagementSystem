@@ -10,7 +10,13 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
+<<<<<<< ours
+<<<<<<< ours
     "bootstrap": "^5.3.3",
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

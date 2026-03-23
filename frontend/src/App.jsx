@@ -1,6 +1,8 @@
 import { useAuth } from './context/AuthContext';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
+<<<<<<< ours
+<<<<<<< ours
 import PortalSitePreviewPage from './pages/PortalSitePreviewPage';
 
 export default function App() {
@@ -56,13 +58,38 @@ export default function App() {
             </div>
           </div>
         </div>
+=======
+=======
+>>>>>>> theirs
+
+export default function App() {
+  const { session, logout } = useAuth();
+
+  if (!session) {
+    return (
+      <div className="container">
+        <h1>React + .NET + MSSQL Starter</h1>
+        <p>Centralized portal setup with role-based access control.</p>
+        <AuthPage />
+<<<<<<< ours
+>>>>>>> theirs
+=======
+>>>>>>> theirs
       </div>
     );
   }
 
+<<<<<<< ours
+<<<<<<< ours
   return (
     <div className="app-shell">
       <Dashboard session={session} logout={logout} />
     </div>
   );
+=======
+  return <Dashboard session={session} logout={logout} />;
+>>>>>>> theirs
+=======
+  return <Dashboard session={session} logout={logout} />;
+>>>>>>> theirs
 }
